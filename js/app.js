@@ -630,6 +630,67 @@ function randomize() {
     return String(h).replace(/\n[ \t]*/g, '').trim();
   }
 
+  /* ---------------- 全屏预览 ----------------
+     整页（或当前组件）在固定预览面板里会被压缩得很小。这里提供一个
+     无干扰的全屏浮层：只渲染生成的 HTML + 其 CSS，其余工作台元素一概不出。 */
+
+  const FULLPAGE_CSS = [
+    '.pv-full{position:fixed;inset:0;z-index:9999;background:#f7f4ec;overflow:auto;' +
+      'padding:16px 24px 72px;box-sizing:border-box;display:none;}',
+    '.pv-full.is-open{display:block;}',
+    '.pv-full__bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;' +
+      'justify-content:flex-end;gap:16px;margin-bottom:20px;}',
+    '.pv-full__title{font-family:var(--study-font-sans, ui-monospace, Menlo, Consolas, monospace);' +
+      'font-weight:800;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#222;}',
+    '.pv-full__close{width:46px;height:46px;border-radius:999px;border:2px solid #141414;' +
+      'background:#f7f4ec;color:#141414;cursor:pointer;padding:0;display:flex;align-items:center;' +
+      'justify-content:center;box-shadow:3px 3px 0 #141414;font-size:0;}',
+    '.pv-full__close svg{width:20px;height:20px;stroke:#141414;fill:none;' +
+      'stroke-width:2.4;stroke-linecap:square;}',
+    '.pv-full__close:hover{background:#ffe44d;}',
+    '.pv-full__close:active{transform:translate(2px,2px);box-shadow:none;}',
+    '.pv-full__wrap{max-width:1200px;margin:0 auto;}',
+    '.pv-full__wrap .brutal-page{margin:0 auto;}',
+    'body.no-scroll-full{overflow:hidden;}'
+  ].join('\n');
+
+  function openFullpage() {
+    let ov = document.getElementById('pv-full');
+    if (!ov) {
+      ov = document.createElement('div');
+      ov.id = 'pv-full';
+      ov.className = 'pv-full';
+      ov.innerHTML =
+        '<div class="pv-full__bar">' +
+        '<span class="pv-full__title">全屏预览</span>' +
+        '<button class="pv-full__close" type="button" title="关闭（Esc）" aria-label="关闭预览">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4 L20 20 M20 4 L4 20"/></svg>' +
+        '</button></div>' +
+        '<div class="pv-full__wrap"></div>';
+      ov.querySelector('.pv-full__close').addEventListener('click', closeFullpage);
+      ov.addEventListener('click', function (e) { if (e.target === ov) closeFullpage(); });
+      document.body.appendChild(ov);
+    }
+    const wrap = ov.querySelector('.pv-full__wrap');
+    const cssEl = document.createElement('style');
+    cssEl.textContent = FULLPAGE_CSS + '\n' +
+      (view.minify ? minifyCSS(buildCSS(state)) : buildCSS(state));
+    wrap.innerHTML = buildHTML(state);
+    wrap.insertBefore(cssEl, wrap.firstChild);
+    ov.classList.add('is-open');
+    document.body.classList.add('no-scroll-full');
+    /* 让整页里的标签页 / 下拉框等也能交互 */
+    try { (new Function(TABS_JS))(); } catch (e) { /* 预览内互动只是增强，失败不回退 */ }
+    ov.scrollTop = 0;
+    ov.querySelector('.pv-full__close').focus();
+  }
+
+  function closeFullpage() {
+    const ov = document.getElementById('pv-full');
+    if (ov) ov.classList.remove('is-open');
+    document.body.classList.remove('no-scroll-full');
+  }
+
   /* ---------------- 绑定 ---------------- */
 
   document.querySelectorAll('[data-pvbg]').forEach(function (b) {
@@ -654,6 +715,14 @@ function randomize() {
   document.getElementById('vMinify').addEventListener('change', function (e) {
     view.minify = e.target.checked;
     saveView(); render();
+  });
+
+  var fpBtn = document.getElementById('fullpageBtn');
+  if (fpBtn) fpBtn.addEventListener('click', openFullpage);
+
+  /* 全屏预览时按 Esc 关闭（叠加在全局按键之上，不影响其它快捷键） */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeFullpage();
   });
 
   /* =========================================================
