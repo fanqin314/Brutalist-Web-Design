@@ -20,6 +20,8 @@
     const padL   = (style === 'dash') ? Math.max(padH, barW + 10) : padH;
     const markRing = (style === 'skew' || style === 'notch'); /* 实心外块被 clip 取形 + 内腔让位，两片叠出空心 */
     const fillAll  = (style === 'block');  /* block 选中时整块填满内腔，而不是中心缩一枚小方块 */
+    /* 动效方式：all = 悬停/按下时整组一起动，one = 只动悬停/按下的那一个选项 */
+    const fxAll    = s.rdFx !== 'one';
 
     /* 两态骨架：OFF 未选 / ON 选中。差异只写进这两只对象，
        下面负责把对象翻译成 CSS —— 和复选框同一个套路 */
@@ -223,15 +225,26 @@
     }
 
     /* 悬停 / 按下写在根上：矩阵的状态类是打在根元素上的，
-       写成 .brutal-radio__opt:hover 的话矩阵那一格不会有任何变化 */
+       写成 .brutal-radio__opt:hover 的话矩阵那一格不会有任何变化。
+       rdFx=one 时仅在单个选项上反应，rdFx=all 时整组联动 */
     L.push('');
-    L.push('.brutal-radio:hover .brutal-radio__opt {');
-    L.push('  box-shadow: ' + hoverS + ';');
-    L.push('}');
-    L.push('.brutal-radio:active .brutal-radio__opt {');
-    L.push('  transform: translate(2px, 2px);');
-    L.push('  box-shadow: none;');
-    L.push('}');
+    if (fxAll) {
+      L.push('.brutal-radio:hover .brutal-radio__opt {');
+      L.push('  box-shadow: ' + hoverS + ';');
+      L.push('}');
+      L.push('.brutal-radio:active .brutal-radio__opt {');
+      L.push('  transform: translate(2px, 2px);');
+      L.push('  box-shadow: none;');
+      L.push('}');
+    } else {
+      L.push('.brutal-radio__opt:hover {');
+      L.push('  box-shadow: ' + hoverS + ';');
+      L.push('}');
+      L.push('.brutal-radio__opt:active {');
+      L.push('  transform: translate(2px, 2px);');
+      L.push('  box-shadow: none;');
+      L.push('}');
+    }
 
     return L;
   }
@@ -259,18 +272,19 @@ function buildRadio(s) {
 }
 
 function randomRadio(s) {
-s.rdStyle = pick(['box', 'box', 'dot', 'dash', 'invert', 'skew', 'stamp']);
+      s.rdStyle = pick(['box', 'box', 'dot', 'dash', 'invert', 'skew', 'stamp']);
       s.rdSize  = pick([16, 20, 22, 26, 30]);
       s.rdGap   = pick([6, 8, 10, 12, 16]);
       s.rdW     = pick([220, 260, 300, 340]);
+      s.rdFx    = pick(['all', 'one']);
       s.fontSize = pick([14, 15, 16, 18]);
       s.uppercase = Math.random() < 0.2;
-}
+    }
 
 COMPONENTS['radio'] = {
   label: '单选组',
   rootSel: '.brutal-radio',
-  defaults: { rdStyle: 'box', rdSize: 22, rdGap: 10, rdW: 260 },
+  defaults: { rdStyle: 'box', rdSize: 22, rdGap: 10, rdW: 260, rdFx: 'all' },
   enums: { rdStyle: Object.keys(RD_STYLES) },
   build: buildRadio,
   css: cssRadio,
@@ -314,5 +328,12 @@ COMPONENTS['radio'] = {
           <label>行距 <span class="val"><span data-out="rdGap"></span>px</span></label>
           <input type="range" data-key="rdGap" min="0" max="24" step="1">
         </div>
+      </div>
+      <div class="field">
+        <label for="fRdFx">动效方式</label>
+        <select id="fRdFx" data-key="rdFx">
+          <option value="all">整组联动 / all</option>
+          <option value="one">只动单选项 / one</option>
+        </select>
       </div>`
 };

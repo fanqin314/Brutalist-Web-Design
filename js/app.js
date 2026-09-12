@@ -398,7 +398,7 @@ function randomize() {
       '<title>Brutalist ' + state.mode + '</title>\n' +
       '<style>\n' +
       bodyWrap + '\n' +
-      '</style>\n<style>\n' + css + '\n</style>\n</head>\n<body>\n' + one +       '<script>\n' + (view.minify ? (SELECT_JS + '\n' + SLIDER_JS + '\n' + TABS_JS).replace(/\n[ \t]+/g, '\n') : (SELECT_JS + '\n' + SLIDER_JS + '\n' + TABS_JS)) + '\n<\/script>\n</body>\n</html>\n';
+      '</style>\n<style>\n' + css + '\n</style>\n</head>\n<body>\n' + one + '\n<script>\n' + (view.minify ? (SELECT_JS + '\n' + SLIDER_JS + '\n' + TABS_JS).replace(/\n[ \t]+/g, '\n') : (SELECT_JS + '\n' + SLIDER_JS + '\n' + TABS_JS)) + '\n<\/script>\n</body>\n</html>\n';
     downloadFile('brutalist-' + state.mode + '.html', doc, 'text/html');
     toast('已导出独立 HTML');
   }

@@ -216,8 +216,11 @@
     }
 
     /* 纹理与变体底图叠成多层背景 */
+    /* 纹理与变体底图叠成多层背景。
+       size 兜底必须是 'auto' 而不是 null —— 否则渐变类变体（stripe / split / tape /
+       grid / bevel）会输出一条无效声明 "background-size: null;"。 */
     function compose(img, size) {
-      if (!pattern) return { img: img || null, size: size || null };
+      if (!pattern) return { img: img || null, size: size || 'auto' };
       if (!img) return { img: pattern.image, size: pattern.size };
       return { img: pattern.image + ', ' + img, size: pattern.size + ', ' + (size || 'auto') };
     }
@@ -265,7 +268,8 @@
     L.push('  border-radius: ' + K.radius + ';');
     if (style === 'skew') L.push('  transform: skewX(-12deg);');
     if (K.trackShadow) L.push('  box-shadow: ' + K.trackShadow + ';');
-    L.push('  transition: background-color .2s ease, box-shadow .2s ease, border-color .2s ease;');
+    L.push('  transition: background-color .2s ease, box-shadow .2s ease, border-color .2s ease,');
+    L.push('              outline-color .12s ease, translate .12s ease;');
     L.push('}');
 
     L.push('');
@@ -320,6 +324,38 @@
       L.push('  color: ' + O.icon + ';');
       L.push('}');
     }
+
+    /* ---------------- 状态反馈 ----------------
+       开关是纯交互控件，却一度 :hover / :active / :focus 全空 ——
+       鼠标移上去没有任何「这能点」的提示，按下去也没有反应。
+       这里统一给轨道补上三种反馈，且刻意只用 outline 与 translate 两个属性：
+         · outline 不占布局，也不与变体自带的 box-shadow 打架
+           （错位叠影的 6px 硬影、外扩硬边的 0 0 0 Npx、厚板镂空的 inset 内腔都在 box-shadow 上）
+         · translate 是独立变换属性，不覆盖 skew 变体靠 transform 做的斜切补偿
+       stateAliases() 会把 :hover / :active / :focus-within 复制成
+       .is-hover / .is-active / .is-focus，五态矩阵因此也能命中。 */
+    const hb = Math.max(3, Math.round(bw * 0.9));   /* 硬边粗细跟着边框量级走 */
+
+    L.push('');
+    L.push('.brutal-switch:hover .brutal-switch__track {');
+    if (bw > 0) L.push('  border-color: ' + s.color + ';');
+    L.push('  outline: ' + hb + 'px solid ' + s.borderColor + ';');
+    L.push('  outline-offset: ' + hb + 'px;');
+    L.push('}');
+
+    /* 聚焦：比悬停再外扩一圈，配合通用状态块给根元素那一圈，形成「内圈贴轨道、
+       外圈包组件」的套色双框 —— 键盘 Tab 过来时一眼看得出焦点落在轨道上，
+       也不会和「只是鼠标划过」混淆（悬停只有一圈，且贴得更近）。 */
+    L.push('');
+    L.push('.brutal-switch:focus-within .brutal-switch__track {');
+    L.push('  outline: ' + hb + 'px solid ' + s.color + ';');
+    L.push('  outline-offset: ' + (hb + 2) + 'px;');
+    L.push('}');
+
+    L.push('');
+    L.push('.brutal-switch:active .brutal-switch__track {');
+    L.push('  translate: 0 2px;');
+    L.push('}');
 
     return L;
   }

@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="K9eJ9zzCodl4H4sKwMgBvW">
+<head data-page-node-id="DJ1I2lvNOqjlmpC7pHW7bD">
+<meta charset="utf-8" data-page-node-id="onDoZcKcQG2hFUADOEr3xn">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="Oh0SwKPhYXxQUPaFGV2U6x">
+<title>整页排版预览</title>
+<style>body{margin:0;padding:40px 16px;background:#f7f4ec;font-family:system-ui,sans-serif;}</style>
+<style>
+.brutal-nav {
+  display: flex;
+  align-items: center;
+  gap: 19px;
+  width: 100%;
+  max-width: 640px;
+  padding: 16px 30px;
+  background: #ffe94a;
+  color: #0a0a0a;
+  border: 4px solid #0a0a0a;
+  box-shadow: 8px 8px 0px #0a0a0a;
+  transform: rotate(-2deg);
+}
+.brutal-nav__brand {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-right: auto;
+}
+.brutal-nav__links {
+  display: flex;
+  gap: 14px;
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.brutal-nav__link {
+  position: relative;
+  color: #0a0a0a;
+  text-decoration: none;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  border-bottom: 3px solid transparent;
+}
+.brutal-nav__link:hover, .brutal-nav__link.is-hover {
+  border-bottom-color: #0a0a0a;
+}
+.brutal-nav__cta {
+  display: inline-block;
+  padding: 10px 21px;
+  background: #0a0a0a;
+  color: #ffe94a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.brutal-nav__cta:hover, .brutal-nav__cta.is-hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 #0a0a0a;
+}
+.brutal-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .46em;
+  box-sizing: border-box;
+  padding: 16px 30px 16px 30px;
+  color: #0a0a0a;
+  background: #ffe94a;
+  border: 4px solid #0a0a0a;
+  box-shadow: 8px 8px 0px #0a0a0a;
+  transform: rotate(-2deg);
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+
+.brutal-btn::after {
+  content: attr(data-badge);
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 3px 7px;
+  background: #0a0a0a;
+  color: #ffe94a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.brutal-btn:hover, .brutal-btn.is-hover {
+  transform: none;
+  box-shadow: 13px 13px 0px #0a0a0a;
+}
+
+.brutal-btn:active, .brutal-btn.is-active {
+  transform: rotate(-2deg) translate(8px, 8px);
+  box-shadow: none;
+}
+.brutal-progress {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 320px;
+  box-sizing: border-box;
+  color: #0a0a0a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.brutal-progress__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.brutal-progress__label:empty { display: none; }
+.brutal-progress__val {
+  flex: 0 0 auto;
+  padding: 2px 6px;
+  background: #ffe94a;
+  color: #0a0a0a;
+  border: 4px solid #0a0a0a;
+  transition: background-color .16s cubic-bezier(.34, 1.56, .64, 1), color .16s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.brutal-progress__track {
+  position: relative;
+  box-sizing: border-box;
+  height: 34px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 4px solid #0a0a0a;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px #0a0a0a;
+  transition: transform .16s cubic-bezier(.34, 1.56, .64, 1), box-shadow .16s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.brutal-progress__fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--v, 64%);
+  background-color: #ffe94a;
+  transition: width .3s cubic-bezier(.34, 1.56, .64, 1);
+  animation: brutal-progress-in .6s cubic-bezier(.34, 1.56, .64, 1) both;
+}
+@keyframes brutal-progress-in {
+  from { width: 0; }
+  to   { width: var(--v, 64%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brutal-progress__fill { animation: none; }
+}
+
+.brutal-progress:hover .brutal-progress__val, .brutal-progress.is-hover .brutal-progress__val {
+  background: #0a0a0a;
+  color: #ffe94a;
+}
+.brutal-progress:hover .brutal-progress__track, .brutal-progress.is-hover .brutal-progress__track {
+  box-shadow: 13px 13px 0px #0a0a0a;
+}
+.brutal-progress:active .brutal-progress__track, .brutal-progress.is-active .brutal-progress__track {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+.brutal-tabs {
+  width: 100%;
+  max-width: 520px;
+  transform: rotate(-2deg);
+}
+.brutal-tabs__bar {
+  display: flex;
+  background: #0a0a0a;
+  border: 4px solid #0a0a0a;
+}
+.brutal-tabs__tab {
+  appearance: none;
+  cursor: pointer;
+  border: none;
+  border-right: 2px solid #0a0a0a;
+  padding: 16px 30px;
+  background: #ffe94a;
+  color: #0a0a0a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.brutal-tabs__tab:last-child { border-right: none; }
+.brutal-tabs__tab[aria-selected="true"] {
+  background: #0a0a0a;
+  color: #ffe94a;
+}
+.brutal-tabs__tab:hover, .brutal-tabs__tab.is-hover {
+  background: rgba(10, 10, 10, 0.85);
+  color: #ffe94a;
+}
+.brutal-tabs__panel {
+  padding: 16px 30px;
+  background: #ffe94a;
+  color: #0a0a0a;
+  border: 4px solid #0a0a0a;
+  border-top: none;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  box-shadow: 8px 8px 0px #0a0a0a;
+}
+.brutal-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 520px;
+  background: #ffe94a;
+  color: #0a0a0a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  border: 4px solid #0a0a0a;
+  box-shadow: 8px 8px 0px #0a0a0a;
+}
+.brutal-table th,
+.brutal-table td {
+  border: 2px solid #0a0a0a;
+  padding: 16px 30px;
+  text-align: left;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.brutal-table th {
+  background: #0a0a0a;
+  color: #ffe94a;
+  font-weight: 900;
+}
+.brutal-table tbody tr:hover, .brutal-table tbody tr.is-hover {
+  background: #0a0a0a;
+}
+.brutal-table tbody tr:nth-child(even) {
+  background: rgba(10, 10, 10, 0.07);
+}
+.brutal-table__cap {
+  caption-side: top;
+  text-align: left;
+  font-weight: 900;
+  padding-bottom: 8px;
+  color: #0a0a0a;
+}
+.brutal-field {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  width: 320px;
+  max-width: 100%;
+  padding: 16px 30px;
+  background: #ffe94a;
+  color: #0a0a0a;
+  border: 4px solid #0a0a0a;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px #0a0a0a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1.2;
+  cursor: text;
+  transition: translate .12s ease, box-shadow .14s ease,
+              border-color .16s ease, background-color .16s ease, color .16s ease;
+  transform: rotate(-2deg);
+}
+
+.brutal-field .brutal-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+  color: inherit;
+  font: inherit;
+  line-height: 1.2;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.brutal-field .brutal-input::placeholder {
+  color: currentColor;
+  opacity: 0.42;
+}
+
+.brutal-field:hover, .brutal-field.is-hover {
+  transform: rotate(0deg);
+  box-shadow: 13px 13px 0px #0a0a0a;
+}
+
+.brutal-field:focus-within, .brutal-field.is-focus {
+  translate: 2px 2px;
+  box-shadow: 6px 6px 0px #0a0a0a;
+}
+.brutal-badge {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45em;
+  padding: 6px 13px 6px 13px;
+  background: transparent;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 0px;
+  filter: drop-shadow(8px 8px 0px #0a0a0a);
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  transform: rotate(-2deg);
+}
+
+.brutal-badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #ffe94a;
+  clip-path: polygon(0 0, 100% 0, 100% calc(50% - 8px), calc(100% - 8px) calc(50% - 8px), calc(100% - 8px) calc(50% + 8px), 100% calc(50% + 8px), 100% 100%, 0 100%, 0 calc(50% + 8px), 8px calc(50% + 8px), 8px calc(50% - 8px), 0 calc(50% - 8px));
+}
+.brutal-select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  width: 300px;
+  padding: 12px 39px 12px 15px;
+  background: #ffe94a;
+  color: #0a0a0a;
+  border: 4px solid #0a0a0a;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px #0a0a0a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform .16s cubic-bezier(.34, 1.56, .64, 1), box-shadow .16s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.brutal-select__tag {
+  flex: 0 0 auto;
+  padding: 2px 6px;
+  background: #0a0a0a;
+  color: #ffe94a;
+  font-size: .82em;
+}
+
+.brutal-select__value {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1;
+  pointer-events: none;
+}
+.brutal-select__list {
+  position: absolute;
+  left: calc(-1 * 4px);
+  right: calc(-1 * 4px);
+  top: 100%;
+  margin: 4px 0 0;
+  z-index: 60;
+  padding: 0;
+  list-style: none;
+  background: #ffe94a;
+  border: 4px solid #0a0a0a;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #0a0a0a;
+  display: none;
+}
+.brutal-select.is-open .brutal-select__list {
+  display: block;
+}
+.brutal-select__opt {
+  position: relative;
+  padding: 12px 21px 12px 15px;
+  color: #0a0a0a;
+  line-height: 1;
+  cursor: pointer;
+  border-bottom: 1px dashed rgba(10, 10, 10, 0.35);
+}
+.brutal-select__opt:last-child {
+  border-bottom: none;
+}
+.brutal-select__opt[aria-selected="true"] {
+  font-weight: 700;
+  background: rgba(10, 10, 10, 0.08);
+}
+.brutal-select__opt[aria-selected="true"]::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translateY(-50%);
+  background: #0a0a0a;
+}
+.brutal-select__opt:hover, .brutal-select__opt.is-active, .brutal-select__opt.is-hover {
+  background: #0a0a0a;
+  color: #ffe94a;
+}
+.brutal-select__opt:hover::before, .brutal-select__opt.is-active::before, .brutal-select__opt.is-hover::before {
+  background: #ffe94a;
+}
+
+.brutal-select__arrow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  background: #0a0a0a;
+  color: #ffe94a;
+  pointer-events: none;
+}
+.brutal-select__arrow::before {
+  content: '';
+  width: 9px;
+  height: 6px;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transition: transform .16s cubic-bezier(.34, 1.56, .64, 1);
+}
+.brutal-select.is-open .brutal-select__arrow::before {
+  transform: rotate(180deg);
+}
+
+.brutal-select:hover .brutal-select__arrow, .brutal-select.is-hover .brutal-select__arrow {
+  background: #ffe94a;
+  color: #0a0a0a;
+}
+.brutal-select:hover, .brutal-select.is-hover {
+  box-shadow: 13px 13px 0px #0a0a0a;
+}
+.brutal-select:active, .brutal-select.is-active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+.brutal-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  color: #0a0a0a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.brutal-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.brutal-switch__track {
+  position: relative;
+  flex: 0 0 auto;
+  width: 4em;
+  height: 2em;
+  font-size: 16px;
+  background-color: #ffffff;
+  border: 4px solid #0a0a0a;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px #0a0a0a;
+  transition: background-color .2s ease, box-shadow .2s ease, border-color .2s ease,
+              outline-color .12s ease, translate .12s ease;
+}
+
+.brutal-switch__thumb {
+  position: absolute;
+  top: 50%;
+  left: calc(4px + 0.18em);
+  width: calc(2em - 2 * 4px - 0.36em);
+  height: calc(2em - 2 * 4px - 0.36em);
+  background-color: #0a0a0a;
+  border-radius: 0px;
+  --thumb-bg: #0a0a0a;
+  transform: translateY(-50%);
+  transition: transform cubic-bezier(.34, 1.56, .64, 1) 0.34s, background-color .2s ease, box-shadow .2s ease;
+}
+
+.brutal-switch__icon {
+  position: absolute;
+  inset: 0;
+}
+
+.brutal-switch input:checked + .brutal-switch__track {
+  background-color: #ffe94a;
+  box-shadow: 8px 8px 0px #0a0a0a;
+}
+
+.brutal-switch input:checked + .brutal-switch__track .brutal-switch__thumb {
+  transform: translateY(-50%) translateX(1.6400000000000001em);
+  background-color: #0a0a0a;
+  --thumb-bg: #0a0a0a;
+}
+
+.brutal-switch:hover .brutal-switch__track, .brutal-switch.is-hover .brutal-switch__track {
+  border-color: #0a0a0a;
+  outline: 4px solid #0a0a0a;
+  outline-offset: 4px;
+}
+
+.brutal-switch:focus-within .brutal-switch__track, .brutal-switch.is-focus .brutal-switch__track {
+  outline: 4px solid #0a0a0a;
+  outline-offset: 6px;
+}
+
+.brutal-switch:active .brutal-switch__track, .brutal-switch.is-active .brutal-switch__track {
+  translate: 0 2px;
+}
+.brutal-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  color: #0a0a0a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.brutal-check input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.brutal-check__box {
+  position: relative;
+  flex: 0 0 auto;
+  width: 1.9em;
+  height: 1.9em;
+  background-color: #ffffff;
+  border: 4px solid #0a0a0a;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px #0a0a0a;
+  transform: rotate(0deg) scale(1);
+  transition: background-color .16s ease, border-color .16s ease,
+              box-shadow .16s ease, transform .22s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.brutal-check__box::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: .48em;
+  height: .88em;
+  border: solid currentColor;
+  border-width: 0 .2em .2em 0;
+  color: #0a0a0a;
+  opacity: 0;
+  transform: translate(-50%, -50%) translate(-.03em, -.17em) rotate(45deg) scale(.35);
+  transition: opacity .12s ease, transform .22s cubic-bezier(.34, 1.56, .64, 1), color .16s ease;
+}
+
+.brutal-check input:checked + .brutal-check__box {
+  background-color: #ffe94a;
+  border: 4px solid #0a0a0a;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px #0a0a0a;
+  transform: rotate(0deg) scale(1);
+}
+
+.brutal-check input:checked + .brutal-check__box::after {
+  color: #0a0a0a;
+  opacity: 1;
+  transform: translate(-50%, -50%) translate(-.03em, -.17em) rotate(45deg) scale(1);
+}
+
+.brutal-check:hover .brutal-check__box, .brutal-check.is-hover .brutal-check__box {
+  translate: 2px 2px;
+  box-shadow: 6px 6px 0px #0a0a0a;
+}
+.brutal-radio {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 260px;
+  box-sizing: border-box;
+  color: #0a0a0a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1;
+  user-select: none;
+}
+
+.brutal-radio__opt {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  padding: 9px 12px 9px 12px;
+  background: #ffffff;
+  color: #0a0a0a;
+  border: 4px solid #0a0a0a;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px #0a0a0a;
+  cursor: pointer;
+  transform: none;
+  transition: background-color .16s cubic-bezier(.34, 1.56, .64, 1), color .16s cubic-bezier(.34, 1.56, .64, 1), box-shadow .16s cubic-bezier(.34, 1.56, .64, 1), transform .16s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.brutal-radio__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.brutal-radio__mark {
+  position: relative;
+  flex: 0 0 auto;
+  display: block;
+  width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 4px solid #0a0a0a;
+  border-radius: 0px;
+}
+
+.brutal-radio__mark::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 0px;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(.4);
+  transition: transform .16s cubic-bezier(.34, 1.56, .64, 1), background .16s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.brutal-radio__opt:has(input:checked) {
+  background-color: #ffe94a;
+  color: #0a0a0a;
+  transform: none;
+}
+.brutal-radio__opt:has(input:checked) .brutal-radio__mark {
+  background: #ffffff;
+  border-radius: 0px;
+}
+.brutal-radio__opt:has(input:checked) .brutal-radio__mark::before {
+  background: #0a0a0a;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.brutal-radio:hover .brutal-radio__opt, .brutal-radio.is-hover .brutal-radio__opt {
+  box-shadow: 13px 13px 0px #0a0a0a;
+}
+.brutal-radio:active .brutal-radio__opt, .brutal-radio.is-active .brutal-radio__opt {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+.brutal-alert {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 13px;
+  min-width: 260px;
+  max-width: 560px;
+  padding: 16px 30px 16px 44px;
+  background: #ffe94a;
+  color: #0a0a0a;
+  border: 4px solid #0a0a0a;
+  box-shadow: 8px 8px 0px #0a0a0a;
+  transform: rotate(-2deg);
+}
+.brutal-alert__bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 10px;
+  background: #1f6feb;
+}
+.brutal-alert__icon {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  background: #1f6feb;
+  color: #fff;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-weight: 900;
+  font-size: 16px;
+}
+.brutal-alert__body {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.brutal-alert__title {
+  margin: 0;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.brutal-alert__msg {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: .85;
+}
+.brutal-slider {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 320px;
+  box-sizing: border-box;
+  color: #0a0a0a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.brutal-slider__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.brutal-slider__label:empty { display: none; }
+.brutal-slider__val {
+  flex: 0 0 auto;
+  padding: 2px 6px;
+  background: #ffe94a;
+  color: #0a0a0a;
+  border: 4px solid #0a0a0a;
+  transition: background-color .16s cubic-bezier(.34, 1.56, .64, 1), color .16s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.brutal-slider__input {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  background-image: linear-gradient(90deg, #ffe94a 0 var(--val,60%), transparent var(--val,60%) 100%);
+  background-size: auto;
+  border: 4px solid #0a0a0a;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px #0a0a0a;
+  cursor: pointer;
+}
+
+.brutal-slider__input::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  height: 30px;
+}
+
+.brutal-slider__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  margin-top: 0px;
+  background: #0a0a0a;
+  border: 4px solid #0a0a0a;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px #0a0a0a;
+}
+
+.brutal-slider__input::-moz-range-track {
+  background: transparent;
+  border: none;
+  height: 30px;
+}
+.brutal-slider__input::-moz-range-thumb {
+  width: 30px;
+  height: 30px;
+  background: #0a0a0a;
+  border: 4px solid #0a0a0a;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px #0a0a0a;
+}
+.brutal-slider__input:focus { outline: none; }
+.brutal-slider__input:focus::-webkit-slider-thumb, .brutal-slider__input.is-focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 5px #ffe94a, 0 0 0 7px #0a0a0a;
+}
+.brutal-slider__input:focus::-moz-range-thumb, .brutal-slider__input.is-focus::-moz-range-thumb {
+  box-shadow: 0 0 0 5px #ffe94a, 0 0 0 7px #0a0a0a;
+}
+
+.brutal-slider:hover .brutal-slider__val, .brutal-slider.is-hover .brutal-slider__val {
+  background: #0a0a0a;
+  color: #ffe94a;
+}
+.brutal-slider:hover .brutal-slider__input::-webkit-slider-thumb, .brutal-slider.is-hover .brutal-slider__input::-webkit-slider-thumb {
+  box-shadow: 13px 13px 0px #0a0a0a;
+}
+.brutal-slider:active .brutal-slider__val, .brutal-slider.is-active .brutal-slider__val {
+  transform: translate(2px, 2px);
+}
+/* ===== 整页构图布局 ===== */
+.brutal-page {
+  --pg-gap: 24px;
+  --pg-gap-sm: 16px;
+  container-type: inline-size;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 16px 30px;
+  box-sizing: border-box;
+  background: #ffe94a;
+  color: #0a0a0a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  text-transform: uppercase;
+  border: 4px solid #0a0a0a;
+  box-shadow: 8px 8px 0px #0a0a0a;
+}
+.brutal-page__head {
+  padding-bottom: var(--pg-gap);
+}
+.brutal-page__head .brutal-nav {
+  width: 100%;
+  max-width: none;
+}
+.brutal-hero {
+  padding: 34px 0;
+  border-top: 4px solid #0a0a0a;
+  border-bottom: 4px solid #0a0a0a;
+}
+.brutal-hero__kicker {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 3px 11px;
+  background: #0a0a0a;
+  color: #ffe94a;
+  font-size: 13px;
+  letter-spacing: .12em;
+}
+.brutal-hero__title {
+  margin: 0;
+  font-size: clamp(48px, 11vw, 128px);
+  font-size: clamp(40px, 11cqi, 128px);
+  line-height: .9;
+  letter-spacing: -.02em;
+  overflow-wrap: break-word;
+  color: #0a0a0a;
+}
+.brutal-hero__sub {
+  max-width: 520px;
+  margin: var(--pg-gap-sm) 0 0;
+  padding-left: 16px;
+  border-left: 5px solid #0a0a0a;
+  font-size: 18px;
+  line-height: 1.4;
+}
+.brutal-hero__actions {
+  display: flex;
+  gap: var(--pg-gap-sm);
+  flex-wrap: wrap;
+  margin-top: var(--pg-gap);
+}
+.brutal-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: var(--pg-gap-sm);
+  padding: var(--pg-gap) 0;
+}
+.brutal-strip .brutal-progress { width: 100%; }
+.brutal-split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: var(--pg-gap);
+  align-items: start;
+  padding: var(--pg-gap) 0;
+}
+.brutal-split__cell { min-width: 0; }
+.brutal-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pg-gap-sm);
+  flex-wrap: wrap;
+  margin-top: var(--pg-gap);
+  padding: 21px 16px;
+  background: #0a0a0a;
+  color: #ffe94a;
+  border: 4px solid #0a0a0a;
+  box-shadow: 8px 8px 0px #0a0a0a;
+}
+.brutal-cta__head {
+  margin: 0;
+  font-size: clamp(22px, 4vw, 44px);
+  font-size: clamp(20px, 5cqi, 44px);
+  line-height: 1;
+}
+.brutal-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: var(--pg-gap) 0;
+  border-top: 4px solid #0a0a0a;
+  border-bottom: 4px solid #0a0a0a;
+}
+.brutal-controls__head {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Courier New', monospace;
+  border-bottom: 4px solid #0a0a0a;
+  padding-bottom: 6px;
+  margin: var(--pg-gap-sm) 0 0;
+}
+.brutal-controls__head:first-child { margin-top: 0; }
+.brutal-controls__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: var(--pg-gap-sm);
+  align-items: start;
+}
+.brutal-controls__item { min-width: 0; }
+.brutal-controls__item > .brutal-field,
+.brutal-controls__item > .brutal-select,
+.brutal-controls__item > .brutal-slider { width: 100%; max-width: 100%; }
+.brutal-controls__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pg-gap-sm) 22px;
+  min-height: 100%;
+  padding-top: 2px;
+}
+.brutal-controls__grid--duo {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+}
+.brutal-controls__item br { display: none; }
+.brutal-controls__item--full { grid-column: 1 / -1; }
+.brutal-controls__item--full > .brutal-alert { width: 100%; max-width: 100%; }
+.brutal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--pg-gap-sm);
+  flex-wrap: wrap;
+  margin-top: var(--pg-gap);
+  padding-top: var(--pg-gap-sm);
+  border-top: 4px solid #0a0a0a;
+  font-size: 14px;
+}
+
+.brutal-page > * { animation: secIn .5s cubic-bezier(.2, .9, .3, 1.12) both; }
+.brutal-page > .brutal-marquee  { animation-delay: 0s; }
+.brutal-page > header           { animation-delay: .06s; }
+.brutal-page > .brutal-hero     { animation-delay: .18s; }
+.brutal-page > .brutal-strip    { animation-delay: .30s; }
+.brutal-page > .brutal-split    { animation-delay: .40s; }
+.brutal-page > .brutal-controls { animation-delay: .50s; }
+.brutal-page > .brutal-cta      { animation-delay: .60s; }
+.brutal-page > .brutal-footer   { animation-delay: .70s; }
+@keyframes secIn {
+  from { opacity: 0; transform: translateY(16px) scale(.985); }
+  60%  { opacity: 1; transform: translateY(-3px) scale(1.004); }
+  to   { opacity: 1; transform: none; }
+}
+.brutal-hero__title { animation: titlePunch .55s cubic-bezier(.2, .85, .3, 1.14) .18s both; }
+@keyframes titlePunch {
+  0%   { opacity: 0; transform: translateX(-3%) scaleX(1.35); }
+  55%  { opacity: 1; transform: translateX(1.2%) scaleX(1); }
+  78%  { transform: translateX(-.6%); }
+  100% { opacity: 1; transform: none; }
+}
+
+.brutal-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  background: #0a0a0a;
+  color: #ffe94a;
+  border: 4px solid #0a0a0a;
+  margin-bottom: var(--pg-gap);
+  padding: 6px 0;
+}
+.brutal-marquee__track {
+  display: inline-flex;
+  animation: marquee 22s linear infinite;
+}
+.brutal-marquee__item {
+  padding: 0 4px;
+  font-size: 14px;
+  letter-spacing: .18em;
+}
+.brutal-marquee:hover .brutal-marquee__track { animation-play-state: paused; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .brutal-page > *, .brutal-hero__title, .brutal-marquee__track { animation: none; }
+}
+@media (max-width: 760px) {
+  .brutal-cta { flex-direction: column; align-items: flex-start; }
+  .brutal-controls__row { gap: var(--pg-gap-sm); }
+  .brutal-hero__sub { max-width: none; }
+}
+</style>
+</head>
+<body data-page-node-id="Gw2xvZLaKaearuI7PkCg9B">
+<div class="brutal-page" data-page-node-id="EyNJf1H0Gz67N6StBlweuN">
+  <div class="brutal-marquee" data-page-node-id="CChoXQrYckL8VEsix6H18k">
+    <div class="brutal-marquee__track" data-page-node-id="NHCkH1jxQFPC6ITAhQjDZE"><span class="brutal-marquee__item" data-page-node-id="nbjhImO3iJGBicVBHWcME6">BRUTAL · 粗野主义 · 拒绝圆润 · </span><span class="brutal-marquee__item" data-page-node-id="XcA78VvJysQ8TMHqFw0I3A">BRUTAL · 粗野主义 · 拒绝圆润 · </span><span class="brutal-marquee__item" data-page-node-id="EHnt9CuncuZbplRrslu2Py">BRUTAL · 粗野主义 · 拒绝圆润 · </span><span class="brutal-marquee__item" data-page-node-id="vJCkJIZcjNwkp3TvHEkQpm">BRUTAL · 粗野主义 · 拒绝圆润 · </span><span class="brutal-marquee__item" data-page-node-id="LkCE6bdoufzGhgFi0CSAeW">BRUTAL · 粗野主义 · 拒绝圆润 · </span><span class="brutal-marquee__item" data-page-node-id="YuMmwBoVsPH8vz4f9HKBYy">BRUTAL · 粗野主义 · 拒绝圆润 · </span><span class="brutal-marquee__item" data-page-node-id="9UMbO1ktf0vFdsBv6UvwtT">BRUTAL · 粗野主义 · 拒绝圆润 · </span><span class="brutal-marquee__item" data-page-node-id="dYvWw56RfrFU6b5qbDSDPU">BRUTAL · 粗野主义 · 拒绝圆润 · </span><span class="brutal-marquee__item" data-page-node-id="JJr7AUEF41VIpwESEE4wD7">BRUTAL · 粗野主义 · 拒绝圆润 · </span><span class="brutal-marquee__item" data-page-node-id="nGW8sEZAzu3ZF1iyifg0PS">BRUTAL · 粗野主义 · 拒绝圆润 · </span><span class="brutal-marquee__item" data-page-node-id="p0lcpAS5KHSHYsO347mTKX">BRUTAL · 粗野主义 · 拒绝圆润 · </span><span class="brutal-marquee__item" data-page-node-id="sci95QgtrEzoz3cXJqBtGk">BRUTAL · 粗野主义 · 拒绝圆润 · </span></div>
+  </div>
+  <header class="brutal-page__head" data-page-node-id="jQhxfXPLUjcBZyqJ4ZotCr">
+    <nav class="brutal-nav" aria-label="主导航" data-page-node-id="joDIffCqax9MoDBOX3hT8w">
+      <span class="brutal-nav__brand" data-page-node-id="GFPjhZEF9uCf6PE3BmWG2E">BRUTAL</span>
+      <ul class="brutal-nav__links" data-page-node-id="lWG3M1gzAMiiO49y2aE79M">
+        <li data-page-node-id="5EGNBpesOVG8yHYgjsxBPZ"><a class="brutal-nav__link" href="#" data-page-node-id="54w3fAfOpErokAP5WhyW4d">首页</a></li>
+        <li data-page-node-id="fTj5sJdhHCGLjWCdKZvXvK"><a class="brutal-nav__link" href="#" data-page-node-id="Gg5TyXEKAq4UEqaio7nRHs">产品</a></li>
+        <li data-page-node-id="f4WUppzEvBH2STy1RVBjRr"><a class="brutal-nav__link" href="#" data-page-node-id="ATsztHYk05EKKZAzWiNKM0">文档</a></li>
+        <li data-page-node-id="FH0chBP8EPQHO3QCaCmILc"><a class="brutal-nav__link" href="#" data-page-node-id="3rzHYkZlsPlvIX3r4T8ygt">关于</a></li>
+      </ul>
+      <a class="brutal-nav__cta" href="#" data-page-node-id="Iv3UInbEt8LCd9n7Ovf5bu">登录</a>
+    </nav>
+  </header>
+  <section class="brutal-hero" data-page-node-id="9plLCK0Y1zdzka9pM4MF1J">
+    <p class="brutal-hero__kicker" data-page-node-id="bdu7lbMNQcL9ObX0TaFnGL">BRUTAL · 粗野主义生成器</p>
+    <h1 class="brutal-hero__title" data-page-node-id="KuRkvU9aV2D43CEbPM0fOi">BUILD IT.</h1>
+    <p class="brutal-hero__sub" data-page-node-id="sWsh5AgADT5M0ofpE3Gk9J">直来直去，拒绝圆润。不加修饰的硬边设计语言。</p>
+    <div class="brutal-hero__actions" data-page-node-id="qqgZ6TkQeHmBWrPPN9JfgO">
+      <button class="brutal-btn" type="button" data-badge="NEW" data-page-node-id="BJF8y9d9HkjhanZR837YYX">
+        <span class="brutal-btn__icon" data-page-node-id="W3VoVXbtZLvL7LqhATJptT"></span>
+        <span class="brutal-btn__label" data-page-node-id="UZF8fIIhL77E7jgdede6j4">开始构建</span>
+      </button>
+    </div>
+  </section>
+  <section class="brutal-strip" data-page-node-id="Q2V99onioAOfgfFSIEyvNo">
+    <div class="brutal-progress" data-page-node-id="vb3pA2yRhlB0z90OeZp4U5">
+      <div class="brutal-progress__head" data-page-node-id="msuJteeLfrVmYFc5h7gOWV">
+        <span class="brutal-progress__label" data-page-node-id="zo5t4uB9g1OHcvobET7QI2">完成度</span>
+        <span class="brutal-progress__val" data-page-node-id="ZEJGN0uhUscYcU63KcAEYI">84%</span>
+      </div>
+      <div class="brutal-progress__track" data-page-node-id="bEl5LCxMirGYQeZhaesTU6">
+        <div class="brutal-progress__fill" style="--v:84%" data-page-node-id="J0tbb0DiCVgXw07NfOAkxh"></div>
+      </div>
+    </div>
+    <div class="brutal-progress" data-page-node-id="4Vqiz8C4X0wtxmK8dh6EXR">
+      <div class="brutal-progress__head" data-page-node-id="cxHj9LEacbcBBrBrbJGMSZ">
+        <span class="brutal-progress__label" data-page-node-id="psmqATTw5tHpjioAxY35Xc">覆盖率</span>
+        <span class="brutal-progress__val" data-page-node-id="YVKDyyZ0YxREqZ2nhHzjRs">62%</span>
+      </div>
+      <div class="brutal-progress__track" data-page-node-id="ze1YFYaUjC70qhRpgodU0D">
+        <div class="brutal-progress__fill" style="--v:62%" data-page-node-id="CwaogTgTShCRrhGFCtDJ3a"></div>
+      </div>
+    </div>
+    <div class="brutal-progress" data-page-node-id="ht2hTRj1FVwkwU5W65zG9J">
+      <div class="brutal-progress__head" data-page-node-id="cBhQnVjB0FYupZHADHGjJn">
+        <span class="brutal-progress__label" data-page-node-id="SEw3qZ70yqLHpGWavB9CuD">满意度</span>
+        <span class="brutal-progress__val" data-page-node-id="6Rg2GALGKklOUo0DrdQNFy">38%</span>
+      </div>
+      <div class="brutal-progress__track" data-page-node-id="tBIZvR3lc6wWIz65o0cVGX">
+        <div class="brutal-progress__fill" style="--v:38%" data-page-node-id="RAPdaHofeJS6wGiH5qibvg"></div>
+      </div>
+    </div>
+  </section>
+  <section class="brutal-split" data-page-node-id="LE8aijlG7E0ATiiu9V24Tr">
+    <div class="brutal-split__cell" data-page-node-id="27LA0VagEg6iGiN9H0bdKK">
+    <div class="brutal-tabs" data-page-node-id="BPo6bs8I5Om5Y7JBCIvcXH">
+      <div class="brutal-tabs__bar" role="tablist" data-page-node-id="2WEI2V2HwpI5KfWFY1X14B">
+        <button class="brutal-tabs__tab" type="button" role="tab" id="btykogiq-t0" aria-controls="btykogiq-p0" aria-selected="true" data-page-node-id="XjQ8BXhBjk9MizVXbNLmMz">概览</button>
+        <button class="brutal-tabs__tab" type="button" role="tab" id="btykogiq-t1" aria-controls="btykogiq-p1" data-page-node-id="NGcvpFBwaMFkDWGujAivvE">规格</button>
+        <button class="brutal-tabs__tab" type="button" role="tab" id="btykogiq-t2" aria-controls="btykogiq-p2" data-page-node-id="CiAWwtVjzpnIPAmhXOovjn">评价</button>
+      </div>
+      <div class="brutal-tabs__panel" role="tabpanel" id="btykogiq-p0" aria-labelledby="btykogiq-t0" data-page-node-id="WhnQXvbpTLyAFpzTUb6xxD">BRUTAL</div>
+      <div class="brutal-tabs__panel" role="tabpanel" id="btykogiq-p1" aria-labelledby="btykogiq-t1" hidden data-page-node-id="u7UxtLvRPPD9P3APwGTBUm">BRUTAL</div>
+      <div class="brutal-tabs__panel" role="tabpanel" id="btykogiq-p2" aria-labelledby="btykogiq-t2" hidden data-page-node-id="nft8E6hJyCMEADblDddiw4">BRUTAL</div>
+    </div>
+    </div>
+    <div class="brutal-split__cell" data-page-node-id="5Lls5FlZNhbwptBCqDZ1JO">
+    <table class="brutal-table" data-stripe="1" data-page-node-id="9MlcavvxU8fgGkWpcY2rMT">
+      <caption class="brutal-table__cap" data-page-node-id="16OcgAMG82wJaALm5Hb70f">BRUTAL</caption>
+      <thead data-page-node-id="pNJy0Dn3EF9IDPsWaFAUdB">
+        <tr data-page-node-id="bQZpFbgUopw0PGkec28lDk">
+          <th data-page-node-id="RDT4pA0ZMAVEgCGVJDheMl">名称</th>
+          <th data-page-node-id="hHEVxE6H9wRg3IisndVGEJ">类型</th>
+          <th data-page-node-id="XzYb9X8arQ7jFoZnEwRqKA">状态</th>
+          <th data-page-node-id="s1Piljmr9AaESAUBX8EY8c">操作</th>
+        </tr>
+      </thead>
+      <tbody data-page-node-id="NcVBopcUFtSEvFANjCP5AS">
+        <tr data-page-node-id="VUmlWxD6CBAIOFZtekDP7j">
+          <td data-page-node-id="79iKheDgAYBaw2LaqpJ8Wc">Alpha</td>
+          <td data-page-node-id="huuYJnWr2SkS322jDqhAfW">默认</td>
+          <td data-page-node-id="DIOchfLuBaxvhqb6dC4We3">就绪</td>
+          <td data-page-node-id="K4ZVZAHtn6r3x12qLaoX2T">编辑</td>
+        </tr>
+        <tr data-page-node-id="F0C76GP8DhjvGnO5roKClU">
+          <td data-page-node-id="Z5nuAqhcyn4VT3eOBj8Txr">Bravo</td>
+          <td data-page-node-id="lvOOp3x3rpQx5E8cAxrBU7">主要</td>
+          <td data-page-node-id="DiBe7kj6tCDX4HXdDSeSBG">运行中</td>
+          <td data-page-node-id="ciWq3SLk9ZaGkYIYNQzUPl">查看</td>
+        </tr>
+        <tr data-page-node-id="obwGvOWVBzxzBTen7Loqvs">
+          <td data-page-node-id="lo7GQyJnvEMqpBuDYig0YQ">Charlie</td>
+          <td data-page-node-id="C9dmz072WhzkgeaJeYn3Kq">成功</td>
+          <td data-page-node-id="IIcJppHUm2qmMKTh4CQMWj">已完成</td>
+          <td data-page-node-id="Qozo5FdBisJ6JfUj0ukNwW">删除</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+  <section class="brutal-controls" data-page-node-id="dx76OYc8dZ8eM0swbCozJo">
+    <h3 class="brutal-controls__head" data-page-node-id="WsVOoAp8tfBDxOcBXbbBos">表单与输入</h3>
+    <div class="brutal-controls__grid" data-page-node-id="VSwutfq0zUHD9BfyzR1dHQ">
+      <div class="brutal-controls__item" data-page-node-id="hS0YzeAfadMlkqyTLc26KZ">
+        <label class="brutal-field" data-page-node-id="Q6bxDhEJhaPIdx3OGavvML">
+          <input class="brutal-input" type="text" placeholder="请输入邮箱" data-page-node-id="OuAF5ulQBdpyZAshQDyIsN">
+        </label>
+      </div>
+      <div class="brutal-controls__item" data-page-node-id="CjtAaxvpdY6K1uOsq02NtL">
+        <div class="brutal-select" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0" data-page-node-id="omHZASUtV6agkLySvwufTr">
+          <span class="brutal-select__tag" data-page-node-id="6Y3htVqxv4YfrsrfPRVuJM">选择规格</span>
+          <span class="brutal-select__value" data-page-node-id="SJMBRKo3yXHIWLraMrDszB">经济版</span>
+          <span class="brutal-select__arrow" data-page-node-id="vmhvkwnWOdLjLXB7QkyG7I"></span>
+          <ul class="brutal-select__list" role="listbox" data-page-node-id="Cer7xsRxflPlAi8WAlkUEA">
+            <li class="brutal-select__opt" role="option" aria-selected="true" data-page-node-id="Fe1wjMkLyboHMv5ejpP99h">经济版</li>
+            <li class="brutal-select__opt" role="option" data-page-node-id="UJGeeaALPg06R823KtlCFE">标准版</li>
+            <li class="brutal-select__opt" role="option" data-page-node-id="01q6Cfj5uSqr7vneUHnDKJ">旗舰版</li>
+          </ul>
+        </div>
+      </div>
+      <div class="brutal-controls__item" data-page-node-id="BmDvFNIBfc8AKEJtRq4Q3Z">
+        <div class="brutal-slider" data-page-node-id="6G2HwcT8ksSq3LNuEQDKC0">
+          <div class="brutal-slider__head" data-page-node-id="QB4KLArcZs1lrG4sBjtZfb">
+            <span class="brutal-slider__label" data-page-node-id="un3JpXNmb4CtkjuWjFk6Iq">音量</span>
+            <span class="brutal-slider__val" data-page-node-id="sbHmGZND5beszMS0Zgyy53">65</span>
+          </div>
+          <input class="brutal-slider__input" type="range" min="0" max="100" value="65" style="--val:65%" data-page-node-id="LQKEcQyBrCZKK4cbdxOZI5">
+        </div>
+      </div>
+    </div>
+    <h3 class="brutal-controls__head" data-page-node-id="7h41uMG1J9ByFkJOhHqoyW">选择与开关</h3>
+    <div class="brutal-controls__grid brutal-controls__grid--duo" data-page-node-id="W6oQfGR0RS9EmDjuCz5tvI">
+      <div class="brutal-controls__item" data-page-node-id="jFEE2B1uaLGWBiDJPO4ZdS">
+        <div class="brutal-radio" data-page-node-id="166jIV1SlNlwpR37EMYL5T">
+          <label class="brutal-radio__opt" data-page-node-id="kjV7Enz28f6W2t7nQqoeXM">
+            <input class="brutal-radio__input" type="radio" name="plan" data-page-node-id="AadN3QBN7FyFykDpi7P1J9">
+            <span class="brutal-radio__mark" data-page-node-id="tT3AARegG7MjbzJu7HwTVc"></span>
+            <span class="brutal-radio__text" data-page-node-id="fXtPLdChrdfLnJXr3VdlqX">标准型</span>
+          </label>
+          <label class="brutal-radio__opt" data-page-node-id="nmro8GBkbvrwOAtcGLg1FO">
+            <input class="brutal-radio__input" type="radio" name="plan" checked data-page-node-id="UWCiFgQM4qs3KX2wDD6Sh0">
+            <span class="brutal-radio__mark" data-page-node-id="Zxx0tahVGCIqNy8LnwDHmq"></span>
+            <span class="brutal-radio__text" data-page-node-id="HNq7H6TnOoZm8jC5tiv3qN">选项二</span>
+          </label>
+          <label class="brutal-radio__opt" data-page-node-id="l2ttFySGlB4j90ojgiWtp5">
+            <input class="brutal-radio__input" type="radio" name="plan" data-page-node-id="xPcKylxEv7vxyvOFmtCYWP">
+            <span class="brutal-radio__mark" data-page-node-id="dfkfJ6GiJPCVYC1x4BUrFZ"></span>
+            <span class="brutal-radio__text" data-page-node-id="PmbnHmZ5Mg7j9FoDIbd1KZ">选项三</span>
+          </label>
+        </div>
+      </div>
+      <div class="brutal-controls__item" data-page-node-id="skjF7Mjz0xwF9MZotsQHFA">
+        <div class="brutal-controls__row" data-page-node-id="Rcb4WR6kbMIIxMovY4EFzq">
+          <label class="brutal-switch" data-page-node-id="oBvU7U8SMg9VC5DTglv1Eh">
+            <input type="checkbox" checked data-page-node-id="G1hg3gE0uVcYhz7X6lYU3Z">
+            <span class="brutal-switch__track" data-page-node-id="8I9zP9dPL0jnCfYdtdA3vC">
+              <span class="brutal-switch__thumb" data-page-node-id="nFKAObD4AGIAYe5GLCFcnu">
+                <span class="brutal-switch__icon" data-page-node-id="ijYWHWzTe1t1CQFjnmGZ8s"></span>
+              </span>
+            </span>
+            <span class="brutal-switch__label" data-page-node-id="qOzrkdCNl3eCP2FKNBpwEX">开启服务</span>
+          </label>
+          <label class="brutal-check" data-page-node-id="msAgis2LbMRmeuyfMuBwvD">
+            <input type="checkbox" checked data-page-node-id="yp6FQGiOurvvMEGnhYN2kt">
+            <span class="brutal-check__box" data-page-node-id="AJa3BwJtC8isar0XP4EHDT"></span>
+            <span class="brutal-check__label" data-page-node-id="XapcMfABIQgq9uUKCesTUI">同意条款</span>
+          </label>
+          <span class="brutal-badge" data-page-node-id="ho68zZEVDctSmGlhNH555r">NEW</span>
+        </div>
+      </div>
+    </div>
+    <h3 class="brutal-controls__head" data-page-node-id="ZsB8tNavWIK52kQieNuTMx">提示</h3>
+    <div class="brutal-controls__grid" data-page-node-id="3wysngBtYIM6BXuXrcxXrR">
+      <div class="brutal-controls__item brutal-controls__item--full" data-page-node-id="Ko03LqGJAKj0H9d6SSQaXt">
+        <div class="brutal-alert brutal-alert--success" role="alert" data-page-node-id="9IK3Ky5XxZZUwIBRPDiXM6">
+          <span class="brutal-alert__bar" aria-hidden="true" data-page-node-id="F7Dos3rT2IIubxCquEhkbw"></span>
+          <span class="brutal-alert__icon" aria-hidden="true" data-page-node-id="P9dVK3abNo8FMREdS0QrTz">✓</span>
+          <div class="brutal-alert__body" data-page-node-id="AtfaFUjTzEOv6u20T2IEpm">
+            <strong class="brutal-alert__title" data-page-node-id="K1u2KpF9rA9z0bhv3cQdxO">成功提示</strong>
+            <span class="brutal-alert__msg" data-page-node-id="6gUI2NXvZu2oeMbBpXYzqw">交易已完成，请查收邮件。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="brutal-cta" data-page-node-id="3YXlHqOvNry9dVYD0hvcuM">
+    <h2 class="brutal-cta__head" data-page-node-id="Ukiip6XZEMvahmeqwb0Yqm">准备好了？</h2>
+    <button class="brutal-btn" type="button" data-badge="NEW" data-page-node-id="tkwNfiE1ipHQNbnmUHeId8">
+      <span class="brutal-btn__icon" data-page-node-id="6mIrahaCTvgboS3RCpW9BE"></span>
+      <span class="brutal-btn__label" data-page-node-id="0fM4cGGsy35MxiubyURYxz">立刻开工</span>
+    </button>
+  </section>
+  <footer class="brutal-footer" data-page-node-id="n4cNcd2NyCArMZBVM2Pu5S">
+    <span data-page-node-id="AGCMG0tuPZCtg7Q1Mq7PiE">BRUTAL</span>
+    <span data-page-node-id="8FFxWSwI6Q7b9h0Fc0vdUV">© 2026 · 粗野主义设计工具</span>
+  </footer>
+</div>
+<script>
+(function(){
+  var doc = document;
+  function closeAll(except){
+    var a = doc.querySelectorAll('.brutal-select.is-open');
+    for(var i=0;i<a.length;i++){ if(a[i]!==except){ a[i].classList.remove('is-open'); a[i].setAttribute('aria-expanded','false'); } }
+  }
+  function open(sel){
+    closeAll(sel);
+    sel.classList.add('is-open');
+    sel.setAttribute('aria-expanded','true');
+    var opts = sel.querySelectorAll('.brutal-select__opt');
+    var cur = sel.querySelector('.brutal-select__opt[aria-selected="true"]') || opts[0] || null;
+    sel._active = cur;
+    for(var i=0;i<opts.length;i++){ opts[i].classList.toggle('is-active', opts[i]===cur); }
+  }
+  function close(sel){ sel.classList.remove('is-open'); sel.setAttribute('aria-expanded','false'); }
+  function choose(sel, opt){
+    var opts = sel.querySelectorAll('.brutal-select__opt');
+    for(var i=0;i<opts.length;i++){ opts[i].removeAttribute('aria-selected'); }
+    opt.setAttribute('aria-selected','true');
+    var val = sel.querySelector('.brutal-select__value');
+    if(val) val.textContent = opt.textContent;
+    close(sel);
+  }
+  doc.addEventListener('click', function(e){
+    var t = e.target;
+    var sel = t && t.closest ? t.closest('.brutal-select') : null;
+    if(!sel){ closeAll(null); return; }
+    if(sel.hasAttribute('disabled') || sel.getAttribute('aria-disabled')==='true' || sel.classList.contains('is-disabled')) return;
+    var opt = t && t.closest ? t.closest('.brutal-select__opt') : null;
+    if(opt){ choose(sel, opt); return; }
+    if(sel.classList.contains('is-open')) close(sel); else open(sel);
+  });
+  doc.addEventListener('keydown', function(e){
+    var t = e.target;
+    var sel = t && t.closest ? t.closest('.brutal-select') : null;
+    if(!sel) return;
+    if(sel.hasAttribute('disabled') || sel.getAttribute('aria-disabled')==='true' || sel.classList.contains('is-disabled')) return;
+    if(e.key==='Escape'){ close(sel); sel.focus(); return; }
+    var opts = [].slice.call(sel.querySelectorAll('.brutal-select__opt'));
+    if(!opts.length) return;
+    if(sel.classList.contains('is-open')){
+      var idx = opts.indexOf(sel._active || opts[0]);
+      if(e.key==='ArrowDown'){ e.preventDefault(); idx=Math.min(opts.length-1, idx+1); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); idx=Math.max(0, idx-1); }
+      else if(e.key==='Home'){ e.preventDefault(); idx=0; }
+      else if(e.key==='End'){ e.preventDefault(); idx=opts.length-1; }
+      else if(e.key==='Enter' || e.key===' '){ e.preventDefault(); choose(sel, sel._active||opts[0]); return; }
+      else return;
+      sel._active = opts[idx];
+      for(var i=0;i<opts.length;i++){ opts[i].classList.toggle('is-active', opts[i]===sel._active); }
+      opts[idx].scrollIntoView({block:'nearest'});
+    } else {
+      if(e.key==='ArrowDown' || e.key==='Enter' || e.key===' '){ e.preventDefault(); open(sel); }
+    }
+  });
+})();
+(function(){
+    var doc = document;
+    function sync(input){
+      if(!input || !input.classList || !input.classList.contains('brutal-slider__input')) return;
+      var v = input.value;
+      input.style.setProperty('--val', v + '%');
+      var root = input.closest ? input.closest('.brutal-slider') : null;
+      var val = root && root.querySelector('.brutal-slider__val');
+      if(val) val.textContent = v;
+    }
+    doc.addEventListener('input', function(e){ sync(e.target); }, true);
+    doc.querySelectorAll('.brutal-slider__input').forEach(sync);
+  })();
+(function(){
+    var doc = document;
+    doc.addEventListener('click', function(e){
+      var t = e.target;
+      var tab = t && t.closest ? t.closest('.brutal-tabs__tab') : null;
+      if(!tab) return;
+      var panelId = tab.getAttribute('aria-controls');
+      var root = tab.closest('.brutal-tabs');
+      if(!root) return;
+      root.querySelectorAll('.brutal-tabs__tab').forEach(function(x){
+        x.setAttribute('aria-selected', x === tab ? 'true' : 'false');
+      });
+      root.querySelectorAll('.brutal-tabs__panel').forEach(function(p){
+        p.hidden = (p.id !== panelId);
+      });
+    });
+    doc.addEventListener('keydown', function(e){
+      var t = e.target;
+      var tab = t && t.closest ? t.closest('.brutal-tabs__tab') : null;
+      if(!tab) return;
+      var tabs = [].slice.call(tab.parentElement.querySelectorAll('.brutal-tabs__tab'));
+      var i = tabs.indexOf(tab);
+      if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+        e.preventDefault();
+        var n = e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+        tabs[n].focus();
+        tabs[n].click();
+      }
+    });
+  })();
+</script>
+</body>
+</html>
