@@ -379,14 +379,18 @@ function randomize() {
   function exportHTML() {
     const css = view.minify ? minifyCSS(buildCSS(state)) : buildCSS(state);
     const one = view.minify ? minifyHTML(buildHTML(state)) : buildHTML(state);
+    /* 整页是纵向长页面，不能像单个组件那样在 body 里垂直居中 */
+    const bodyWrap = (state.mode === 'page')
+      ? 'body{margin:0;padding:40px 16px;background:#f7f4ec;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}'
+      : 'body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;' +
+        'padding:40px;background:#f7f4ec;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}';
     const doc =
       '<!DOCTYPE html>\n<html lang="zh-CN">\n<head>\n' +
       '<meta charset="utf-8">\n' +
       '<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
       '<title>Brutalist ' + state.mode + '</title>\n' +
       '<style>\n' +
-      'body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;' +
-      'padding:40px;background:#f7f4ec;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}\n' +
+      bodyWrap + '\n' +
       '</style>\n<style>\n' + css + '\n</style>\n</head>\n<body>\n' + one +       '<script>\n' + (view.minify ? (SELECT_JS + '\n' + SLIDER_JS + '\n' + TABS_JS).replace(/\n[ \t]+/g, '\n') : (SELECT_JS + '\n' + SLIDER_JS + '\n' + TABS_JS)) + '\n<\/script>\n</body>\n</html>\n';
     downloadFile('brutalist-' + state.mode + '.html', doc, 'text/html');
     toast('已导出独立 HTML');

@@ -8,7 +8,9 @@ function buildCSS(s) {
   const c = COMPONENTS[s.mode];
   let L = c ? c.css(s) : cssButton(s);
   L = stateAliases(L);
-  return L.concat(universalStates(s)).join('\n');
+  /* 整页不是一个可 disabled / focus 的离散组件，通用状态块不适用 */
+  if (s.mode !== 'page') L = L.concat(universalStates(s));
+  return L.join('\n');
 }
 
 /* buildHTML：注册表分派 */
@@ -171,8 +173,10 @@ function buildHTML(s) {
     const css = buildCSS(state);
 
     /* 预览区：五态矩阵 或 单个组件；导出的永远是单个组件。
+       整页（page）本身就是一张完整页面，不套矩阵。
        统一套一层 .pv-canvas，设备宽度模拟才有东西可以夹住。 */
-    const inner = state.showMatrix ? matrixHTML(state, one, css) : one;
+    const single = state.mode === 'page' || !state.showMatrix;
+    const inner = single ? one : matrixHTML(state, one, css);
     preview.innerHTML = '<div class="pv-canvas">' + inner + '</div>';
     applyView();
     renderPatternTag();

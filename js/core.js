@@ -23,7 +23,8 @@
     alert:    '警告标题',
     table:    '表格标题（可留空）',
     nav:      '品牌名',
-    tabs:     '面板内容'
+    tabs:     '面板内容',
+    page:     '品牌名'
   };
 
   /* ---------------- 纹理名称 ---------------- */
@@ -570,7 +571,7 @@
 const COMPONENTS = {};
 const MODE_ORDER = ['button', 'card', 'checkbox', 'switch', 'input', 'badge',
                     'radio', 'progress', 'slider', 'select',
-                    'alert', 'table', 'nav', 'tabs'];
+                    'alert', 'table', 'nav', 'tabs', 'page'];
 
 /* 所有模式共享的默认状态（组件专属默认写在各组件文件里） */
 const GLOBAL_DEFAULTS = {
