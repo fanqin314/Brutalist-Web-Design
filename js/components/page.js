@@ -25,6 +25,14 @@
 
     let h = '<div class="brutal-page">\n';
 
+    /* 页顶跑马灯：街头电视墙式滚动标语，双份内容做无缝循环 */
+    const tickTxt = esc(brand) + ' · 粗野主义 · 拒绝圆润 · ';
+    const tickHtml = '<span class="brutal-marquee__item">' + tickTxt + '</span>';
+    let track = '';
+    for (let i = 0; i < 6; i++) track += tickHtml;
+    track += track;   /* 两份相同内容，translateX(-50%) 即可无缝循环 */
+    h += '  <div class="brutal-marquee">\n    <div class="brutal-marquee__track">' + track + '</div>\n  </div>\n';
+
     /* 顶部导航 */
     h += '  <header class="brutal-page__head">\n';
     h += indent(buildNav(navS), 4);
@@ -200,6 +208,60 @@
     L.push('  padding-top: 14px;');
     L.push('  border-top: ' + Math.max(2, bw) + 'px solid ' + s.borderColor + ';');
     L.push('  font-size: ' + Math.round(fs * 0.85) + 'px;');
+    L.push('}');
+
+    /* ===== 整页动效 ===== */
+
+    /* 错峰弹入：整个区块按次序 springy 出场（进度条的填充已有自己的入场动画） */
+    L.push('');
+    L.push('.brutal-page > * { animation: secIn .5s cubic-bezier(.2, .9, .3, 1.12) both; }');
+    L.push('.brutal-page > header           { animation-delay: .06s; }');
+    L.push('.brutal-page > .brutal-hero     { animation-delay: .18s; }');
+    L.push('.brutal-page > .brutal-strip    { animation-delay: .32s; }');
+    L.push('.brutal-page > .brutal-split    { animation-delay: .44s; }');
+    L.push('.brutal-page > .brutal-cta      { animation-delay: .54s; }');
+    L.push('.brutal-page > .brutal-footer   { animation-delay: .64s; }');
+    L.push('@keyframes secIn {');
+    L.push('  from { opacity: 0; transform: translateY(16px) scale(.985); }');
+    L.push('  60%  { opacity: 1; transform: translateY(-3px) scale(1.004); }');
+    L.push('  to   { opacity: 1; transform: none; }');
+    L.push('}');
+
+    /* 标题冲击：主标题硬挤进场 + 横向溢出回弹 */
+    L.push('.brutal-hero__title { animation: titlePunch .55s cubic-bezier(.2, .85, .3, 1.14) .18s both; }');
+    L.push('@keyframes titlePunch {');
+    L.push('  0%   { opacity: 0; transform: translateX(-3%) scaleX(1.35); }');
+    L.push('  55%  { opacity: 1; transform: translateX(1.2%) scaleX(1); }');
+    L.push('  78%  { transform: translateX(-.6%); }');
+    L.push('  100% { opacity: 1; transform: none; }');
+    L.push('}');
+
+    /* 跑马灯滚动 */
+    L.push('');
+    L.push('.brutal-marquee {');
+    L.push('  overflow: hidden;');
+    L.push('  white-space: nowrap;');
+    L.push('  background: ' + s.borderColor + ';');
+    L.push('  color: ' + s.bg + ';');
+    L.push('  border: ' + bw + 'px solid ' + s.borderColor + ';');
+    L.push('  margin-bottom: 24px;');
+    L.push('  padding: 6px 0;');
+    L.push('}');
+    L.push('.brutal-marquee__track {');
+    L.push('  display: inline-flex;');
+    L.push('  animation: marquee 22s linear infinite;');
+    L.push('}');
+    L.push('.brutal-marquee__item {');
+    L.push('  padding: 0 4px;');
+    L.push('  font-size: ' + Math.round(fs * 0.9) + 'px;');
+    L.push('  letter-spacing: .18em;');
+    L.push('}');
+    L.push('.brutal-marquee:hover .brutal-marquee__track { animation-play-state: paused; }');
+    L.push('@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }');
+
+    /* 尊重系统"减弱动态"偏好，一次性关掉整页动效 */
+    L.push('@media (prefers-reduced-motion: reduce) {');
+    L.push('  .brutal-page > *, .brutal-hero__title, .brutal-marquee__track { animation: none; }');
     L.push('}');
 
     /* 窄屏降级成单列 */
