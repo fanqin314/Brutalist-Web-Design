@@ -156,71 +156,12 @@ function buildHTML(s) {
   }
 
   /* =========================================================
-     事件 · 控件
+     事件绑定统一收敛到 app.js，避免重复绑定触发两次：
+       - 控件 input 走 panel 事件委托（onPanelInput）
+       - 模式切换走 modebar 事件委托
+       - 键盘导航（方向键 / 数字键）绑定在 app.js
+     render.js 不再逐元素 / 逐监听绑定。
      ========================================================= */
-
-  document.querySelectorAll('[data-key]').forEach(function (el) {
-    const key = el.dataset.key;
-
-    el.addEventListener('input', function () {
-      let v;
-      if (el.type === 'checkbox')      v = el.checked;
-      else if (el.type === 'range')    v = parseFloat(el.value);
-      else                             v = el.value;
-
-      state[key] = v;
-      render();
-      scheduleHistory();
-    });
-  });
-
-  /* =========================================================
-     事件 · 模式切换
-     ========================================================= */
-
-  document.querySelectorAll('.mode-tab').forEach(function (tab) {
-    tab.addEventListener('click', function () { setMode(tab.dataset.mode); });
-  });
-
-  /* 标签栏键盘导航：方向键在组内移动并即时切换，Home / End 跳首尾。 */
-  (function bindModeKeys() {
-    const bar = document.querySelector('.modebar');
-    if (!bar) return;
-    bar.addEventListener('keydown', function (e) {
-      const tabs = Array.prototype.slice.call(bar.querySelectorAll('.mode-tab'));
-      const i = tabs.indexOf(document.activeElement);
-      if (i < 0) return;
-
-      let n = -1;
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown')   n = (i + 1) % tabs.length;
-      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i - 1 + tabs.length) % tabs.length;
-      else if (e.key === 'Home')                             n = 0;
-      else if (e.key === 'End')                              n = tabs.length - 1;
-      else if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        setMode(tabs[i].dataset.mode);
-        return;
-      } else return;
-
-      e.preventDefault();
-      tabs[n].focus();
-      setMode(tabs[n].dataset.mode);
-    });
-  })();
-
-  /* 数字键 1~9 / 0 直跳模式。面板里有几十个输入控件 ——
-     在输入框、下拉里按数字是在打字，绝不能抢。 */
-  document.addEventListener('keydown', function (e) {
-    if (e.ctrlKey || e.metaKey || e.altKey) return;
-    const t = e.target;
-    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' ||
-              t.tagName === 'SELECT' || t.isContentEditable)) return;
-    if (!/^[0-9]$/.test(e.key)) return;
-    const mode = MODES[e.key === '0' ? 9 : Number(e.key) - 1];
-    if (!mode) return;
-    e.preventDefault();
-    setMode(mode);
-  });
 
   /* =========================================================
      随机 / 重置
