@@ -636,6 +636,24 @@
     user-select: none;
   }
 
+  /* 整页模式：按真实宽度显示，超宽/超高时滚动查看，
+     而不是被压缩塞进预览列。放在 is-dev 之后，保证同权重时整页优先。 */
+  .preview.is-page {
+    align-items: flex-start;   /* 页很长时从顶部展开 */
+    padding: 26px;
+  }
+  .preview.is-page .pv-canvas {
+    flex: 0 1 auto;            /* 不再强制撑满 + 垂直居中 */
+    width: max-content;
+    max-width: none;
+    min-width: 100%;
+    margin: 0 auto;            /* 页面窄于预览时仍居中 */
+  }
+  .preview.is-page .pv-canvas > * {
+    width: max-content;
+    margin: 0 auto;
+  }
+
   /* ============ 代码语法高亮 ============ */
   .c-com  { color: #6f7a5e; font-style: italic; }
   .c-sel  { color: #ffd75e; }

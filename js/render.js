@@ -178,6 +178,7 @@ function buildHTML(s) {
     const single = state.mode === 'page' || !state.showMatrix;
     const inner = single ? one : matrixHTML(state, one, css);
     preview.innerHTML = '<div class="pv-canvas">' + inner + '</div>';
+    preview.classList.toggle('is-page', state.mode === 'page');
     applyView();
     renderPatternTag();
     genStyle.textContent = css;
