@@ -94,8 +94,26 @@ function buildTable(s) {
 
         const cols = Math.max(2, Math.min(6, Number(s.tCols) || 4));
         const rows = Math.max(1, Math.min(8, Number(s.tRows) || 3));
-        const heads = ['名称', '类型', '状态', '操作'].slice(0, cols);
+
+        /* 表头：优先用用户填的 tbHead（逗号分隔），
+           不足列用「列N」补齐、超出则截断到 cols。 */
+        const heads = String(s.tbHead || '').split(/[,，]/)
+          .map(function (x) { return x.trim(); }).filter(Boolean);
         while (heads.length < cols) heads.push('列' + (heads.length + 1));
+        heads.length = cols;
+
+        /* 单元格：tbData 每行是一行数据（单元格逗号分隔）；
+           行/列不足时用 demoCell 兜底，用户留白也不至于空表格。 */
+        const lines = String(s.tbData || '').split(/\r?\n/).map(function (x) { return x.trim(); });
+        const cellAt = function (r, c) {
+          const ls = lines[r];
+          if (ls) {
+            const cells = ls.split(/[,，]/).map(function (x) { return x.trim(); });
+            if (cells[c]) return cells[c];
+          }
+          return demoCell(c, r);
+        };
+
         let h = '<table class="brutal-table"' + (s.tStripe ? ' data-stripe="1"' : '') + '>\n';
         if (s.text && s.text.trim()) h += '  <caption class="brutal-table__cap">' + esc(s.text.trim()) + '</caption>\n';
         h += '  <thead>\n    <tr>\n';
@@ -103,7 +121,7 @@ function buildTable(s) {
         h += '    </tr>\n  </thead>\n  <tbody>\n';
         for (let r = 0; r < rows; r++) {
           h += '    <tr>\n';
-          for (let i = 0; i < cols; i++) h += '      <td>' + esc(demoCell(i, r)) + '</td>\n';
+          for (let i = 0; i < cols; i++) h += '      <td>' + esc(cellAt(r, i)) + '</td>\n';
           h += '    </tr>\n';
         }
         h += '  </tbody>\n</table>';
@@ -121,12 +139,20 @@ s.tCols = pick([3, 4, 5, 6]);
 COMPONENTS['table'] = {
   label: '表格',
   rootSel: '.brutal-table',
-  defaults: { tbStyle: 'slab', tCols: 4, tRows: 3, tStripe: true },
+  defaults: { tbStyle: 'slab', tCols: 4, tRows: 3, tStripe: true, tbHead: '名称, 类型, 状态, 操作', tbData: '' },
   enums: { tbStyle: Object.keys(TB_STYLES) },
   build: buildTable,
   css: cssTable,
   random: randomTable,
   panel: `      <h2>表格</h2>
+      <div class="field">
+        <label for="fTbHead">表头（逗号分隔）</label>
+        <input type="text" id="fTbHead" data-key="tbHead" maxlength="80" placeholder="名称, 类型, 状态, 操作">
+      </div>
+      <div class="field">
+        <label for="fTbData">单元格（每行一行，逗号分隔；留空自动填充演示数据）</label>
+        <textarea id="fTbData" data-key="tbData" rows="4" placeholder="可用, 正常, 通过, 编辑"></textarea>
+      </div>
       <div class="field">
         <label>列数 <span class="val"><span data-out="tCols"></span></span></label>
         <input type="range" data-key="tCols" min="2" max="6" step="1">
