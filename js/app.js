@@ -264,6 +264,26 @@ function randomize() {
     return T ? Object.keys(T).length : 0;
   }
 
+  /* 模式栏从注册表一次性整体重建：清空后逐模式生成，保证按钮扁平、
+     无重复、无历史残留的错位标记。modebar 的按钮数量/顺序只由 MODES 决定。 */
+  function layoutModebar() {
+    const bar = document.getElementById('modebar');
+    const html = MODES.map(function (m) {
+      const name = COMPONENTS[m] ? COMPONENTS[m].label : m;
+      const n = modeStyleCount(m);
+      const act = m === state.mode ? ' active' : '';
+      return '<button class="mode-tab' + act + '" type="button" data-mode="' + m + '"' +
+        ' role="tab" aria-controls="preview"' +
+        ' aria-selected="' + (m === state.mode ? 'true' : 'false') + '"' +
+        ' tabindex="' + (m === state.mode ? '0' : '-1') + '"' +
+        (n ? ' title="' + esc(name) + ' · ' + n + ' 款变体"' : '') + '>' +
+        '<span class="mode-tab__label">' + esc(name) + '</span>' +
+        '<span class="mode-tab__n" aria-hidden="true">' + n + '</span>' +
+        '</button>';
+    }).join('');
+    bar.innerHTML = html;
+  }
+
   function enhanceModebar() {
     document.querySelectorAll('.mode-tab').forEach(function (tab) {
       const mode = tab.dataset.mode;
@@ -799,17 +819,10 @@ document.addEventListener('keydown', function (e) {
 
 /* 用 registry 动态生成模式栏与每模式的控制分组 */
 (function buildChrome() {
-  const bar = document.getElementById('modebar');
+  layoutModebar();   /* 模式栏整体确定性重建，只由 MODES 决定 */
   const host = document.getElementById('modePanels');
   MODES.forEach(function (m) {
     const c = COMPONENTS[m];
-    const b = document.createElement('button');
-    b.className = 'mode-tab' + (m === state.mode ? ' active' : '');
-    b.type = 'button';
-    b.dataset.mode = m;
-    b.textContent = c ? c.label : m;
-    bar.appendChild(b);
-
     if (c && c.panel) {
       const sec = document.createElement('section');
       sec.className = 'group';
