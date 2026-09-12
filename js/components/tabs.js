@@ -167,10 +167,17 @@ function buildTabs(s) {
 }
 
 function randomTabs(s) {
-s.tsStyle = pick(['slab', 'slab', 'under', 'bracket', 'notch', 'invert', 'stamp', 'rail', 'tape']);
-      s.tTabs = pick(['概览, 规格, 评价', '基础, 进阶, 高级', 'Day 1, Day 2, Day 3']);
-      s.fontSize = pick([14, 15, 16, 18]);
-      s.uppercase = Math.random() < 0.4;
+  s.tsStyle = pick(['slab', 'slab', 'under', 'bracket', 'notch', 'invert', 'stamp', 'rail', 'tape']);
+  /* 标签数量与文案一起变：2~4 个 tab × 不同词池 */
+  const n = pick([2, 3, 4]);
+  s.tTabs = pick([
+    ['概览', '规格', '评价'],
+    ['基础', '进阶', '高级', '专家'],
+    ['Day 1', 'Day 2', 'Day 3'],
+    ['一句', '二句', '三句', '四句']
+  ]).slice(0, n).join(', ');
+  s.fontSize = pick([14, 15, 16, 18]);
+  s.uppercase = Math.random() < 0.4;
 }
 
 COMPONENTS['tabs'] = {

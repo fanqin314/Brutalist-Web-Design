@@ -306,6 +306,11 @@ COMPONENTS['checkbox'] = {
         <button class="chip" type="button" data-preset="cbHatch">警戒斜纹</button>
         <button class="chip" type="button" data-preset="cbBolt">闪电标记</button>
         <button class="chip" type="button" data-preset="cbBars">双横线标记</button>
+        <button class="chip" type="button" data-preset="cbStamp">印章弹入</button>
+        <button class="chip" type="button" data-preset="cbGrid">网格复选框</button>
+        <button class="chip" type="button" data-preset="cbNotch">切角复选框</button>
+        <button class="chip" type="button" data-preset="cbBevel">斜切复选框</button>
+        <button class="chip" type="button" data-preset="cbBracket">四角夹框</button>
       </div>
       <div class="field">
         <label for="fCbStyle">风格变体</label>

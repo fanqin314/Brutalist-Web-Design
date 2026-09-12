@@ -346,6 +346,10 @@ COMPONENTS['button'] = {
         <button class="chip" type="button" data-preset="btBracket">四角夹框</button>
         <button class="chip" type="button" data-preset="btPush">厚底立体</button>
         <button class="chip" type="button" data-preset="btArrow">箭头动作</button>
+        <button class="chip" type="button" data-preset="btGrid">网格纹理</button>
+        <button class="chip" type="button" data-preset="btTape">斜贴封条</button>
+        <button class="chip" type="button" data-preset="btNotch">缺口</button>
+        <button class="chip" type="button" data-preset="btStamp">印章</button>
       </div>
       <div class="field">
         <label for="fBtnStyle">轮廓变体</label>
@@ -358,6 +362,10 @@ COMPONENTS['button'] = {
           <option value="rail">侧栏标条 / rail</option>
           <option value="bracket">四角夹框 / bracket</option>
           <option value="push">厚底立体 / push</option>
+          <option value="grid">网格纹理 / grid</option>
+          <option value="tape">斜贴封条 / tape</option>
+          <option value="notch">缺口按钮 / notch</option>
+          <option value="stamp">印章双框 / stamp</option>
         </select>
       </div>
       <div class="grid-2">

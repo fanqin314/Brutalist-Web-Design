@@ -150,11 +150,18 @@ function buildNav(s) {
 }
 
 function randomNav(s) {
-s.nvStyle = pick(['slab', 'slab', 'under', 'tag', 'bracket', 'rail', 'stamp', 'invert', 'arrow']);
-      s.nvLinks = pick(['首页, 产品, 文档, 关于', '概览, 功能, 定价, 博客', 'Home, Docs, API, Contact']);
-      s.nvCta = pick(['登录', '开始', 'Get Started', '订阅']);
-      s.fontSize = pick([14, 15, 16, 18]);
-      s.uppercase = Math.random() < 0.6;
+  s.nvStyle = pick(['slab', 'slab', 'under', 'tag', 'bracket', 'rail', 'stamp', 'invert', 'arrow']);
+  /* 链接数量与文案一起变：3~5 个链接 × 不同业务词池 */
+  const n = pick([3, 4, 5]);
+  s.nvLinks = pick([
+    ['概览', '功能', '定价'].slice(0, n),
+    ['首页', '产品', '文档', '关于'].slice(0, n),
+    ['Home', 'Docs', 'API', 'Contact'].slice(0, n),
+    ['作品', '服务', '团队', '联系'].slice(0, n)
+  ]).join(', ');
+  s.nvCta = pick(['登录', '开始', 'Get Started', '订阅', '', '加入']);
+  s.fontSize = pick([14, 15, 16, 18]);
+  s.uppercase = Math.random() < 0.6;
 }
 
 COMPONENTS['nav'] = {

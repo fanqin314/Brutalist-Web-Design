@@ -130,10 +130,21 @@ function buildTable(s) {
 }
 
 function randomTable(s) {
-s.tCols = pick([3, 4, 5, 6]);
-      s.tRows = pick([2, 3, 4, 6]);
-      s.tStripe = Math.random() < 0.7;
-      s.fontSize = pick([13, 14, 15, 16]);
+  s.tbStyle = pick(['slab', 'slab', 'band', 'rule', 'grid', 'bevel', 'rail', 'tape', 'stamp']);
+  s.tCols = pick([3, 4, 5, 6]);
+  s.tRows = pick([3, 4, 5, 6]);
+  s.tStripe = Math.random() < 0.7;
+  /* 表头 + 内容成组抽换：乱点也能一眼看出整表换了主题 */
+  const sets = [
+    { h: '名称, 类型, 状态, 操作', d: 'Alpha, 默认, 就绪, 编辑\nBravo, 主要, 运行中, 查看\nCharlie, 警告, 待处理, 删除' },
+    { h: '项目, 负责人, 进度, 预算', d: '重构, 阿杜, 完成, ¥42K\n新官网, 大李, 进行中, ¥120K\n压测, 老周, 已排期, ¥8K' },
+    { h: 'Stock, Q1, Q2, Q3', d: '001, +12%, -3%, +28%\n002, +5%, +9%, -11%\n003, -20%, +15%, +40%' },
+    { h: '车站, 首班, 末班, 票价', d: 'A口, 06:10, 23:40, ¥6\nB口, 06:05, 23:35, ¥8\nC口, 06:20, 23:50, ¥4' }
+  ];
+  const st = pick(sets);
+  s.tbHead = st.h;
+  s.tbData = st.d;
+  s.fontSize = pick([13, 14, 15, 16]);
 }
 
 COMPONENTS['table'] = {

@@ -544,6 +544,10 @@ COMPONENTS['input'] = {
         <button class="chip" type="button" data-preset="inRail">侧栏标条</button>
         <button class="chip" type="button" data-preset="inStamp">印章双框</button>
         <button class="chip" type="button" data-preset="inStripe">警戒条纹</button>
+        <button class="chip" type="button" data-preset="inGrid">网格输入框</button>
+        <button class="chip" type="button" data-preset="inNotch">切角输入框</button>
+        <button class="chip" type="button" data-preset="inCorner">切角四角</button>
+        <button class="chip" type="button" data-preset="inTape">斜贴封条</button>
       </div>
       <div class="field">
         <label for="fInStyle">风格变体</label>

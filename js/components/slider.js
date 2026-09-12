@@ -231,6 +231,10 @@ COMPONENTS['slider'] = {
         <button class="chip" type="button" data-preset="slTick">刻度轨道</button>
         <button class="chip" type="button" data-preset="slSkew">斜切滑块</button>
         <button class="chip" type="button" data-preset="slHatch">未填充斜纹</button>
+        <button class="chip" type="button" data-preset="slGrid">网格轨道</button>
+        <button class="chip" type="button" data-preset="slBlock">大方块滑块</button>
+        <button class="chip" type="button" data-preset="slNotch">缺口滑块</button>
+        <button class="chip" type="button" data-preset="slRing">圆环滑块</button>
       </div>
       <div class="field">
         <label for="fSlStyle">轨道 / 滑块变体</label>

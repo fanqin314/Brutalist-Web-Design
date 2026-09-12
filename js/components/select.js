@@ -320,6 +320,10 @@ COMPONENTS['select'] = {
         <button class="chip" type="button" data-preset="seRail">侧栏标条</button>
         <button class="chip" type="button" data-preset="seBracket">四角夹框</button>
         <button class="chip" type="button" data-preset="seBand">通栏硬切</button>
+        <button class="chip" type="button" data-preset="seStamp">印章双框</button>
+        <button class="chip" type="button" data-preset="seNotch">切角硬框</button>
+        <button class="chip" type="button" data-preset="seBevel">斜切硬框</button>
+        <button class="chip" type="button" data-preset="seGrid">网格底纹</button>
       </div>
       <div class="field">
         <label for="fSeStyle">框体变体</label>
@@ -330,6 +334,9 @@ COMPONENTS['select'] = {
           <option value="bracket">四角夹框 / bracket</option>
           <option value="band">通栏硬切 / band</option>
           <option value="stamp">印章双框 / stamp</option>
+          <option value="notch">切角硬框 / notch</option>
+          <option value="bevel">斜切硬框 / bevel</option>
+          <option value="grid">网格底纹 / grid</option>
         </select>
       </div>
       <div class="field">

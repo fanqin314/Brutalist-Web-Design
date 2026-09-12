@@ -275,10 +275,10 @@
   }
 
   function randomPage(s) {
-    s.pgTitle = pick(['BUILD IT.', 'MAKE IT LOUD', 'SAY IT PLAIN', 'JUST DO IT.', 'YES. NOW.']);
-    s.pgSub   = pick(['直来直去，拒绝圆润。', '不加修饰的硬边设计。', 'Deutsch 功能主义 × 街头标语。', '']);
-    s.pgLabel = pick(['开始构建', '就这么办', '走了', '继续']);
-    s.pgCta   = Math.random() < 0.7 ? pick(['立刻开工', '马上用', '看方案', '加入我们']) : '';
+    s.pgTitle = pick(['BUILD IT.', 'MAKE IT LOUD', 'SAY IT PLAIN', 'JUST DO IT.', 'YES. NOW.', 'NO FEAR.', 'RAW & REAL.']);
+    s.pgSub   = pick(['直来直去，拒绝圆润。', '不加修饰的硬边设计。', 'Deutsch 功能主义 × 街头标语。', '所有圆角，都是怯懦。', '']);
+    s.pgLabel = pick(['开始构建', '就这么办', '走了', '继续', '开整']);
+    s.pgCta   = Math.random() < 0.75 ? pick(['立刻开工', '马上用', '看方案', '加入我们', '预定席位']) : '';
   }
 
   COMPONENTS['page'] = {

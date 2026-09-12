@@ -281,6 +281,10 @@ COMPONENTS['radio'] = {
         <button class="chip" type="button" data-preset="rdInvert">选中反白</button>
         <button class="chip" type="button" data-preset="rdSkew">斜切标记</button>
         <button class="chip" type="button" data-preset="rdStamp">印章歪斜</button>
+        <button class="chip" type="button" data-preset="rdNotch">切角标记</button>
+        <button class="chip" type="button" data-preset="rdBlock">实心方块</button>
+        <button class="chip" type="button" data-preset="rdBar">底部粗条</button>
+        <button class="chip" type="button" data-preset="rdFrame">双线外框</button>
       </div>
       <div class="field">
         <label for="fRdStyle">选中表态变体</label>

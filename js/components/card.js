@@ -510,6 +510,10 @@ COMPONENTS['card'] = {
         <button class="chip" type="button" data-preset="cdStamp">印章双框</button>
         <button class="chip" type="button" data-preset="cdRail">侧栏标条</button>
         <button class="chip" type="button" data-preset="cdTape">斜贴封条</button>
+        <button class="chip" type="button" data-preset="cdGrid">网格底纹</button>
+        <button class="chip" type="button" data-preset="cdOutline">空描边卡</button>
+        <button class="chip" type="button" data-preset="cdCorner">切角卡片</button>
+        <button class="chip" type="button" data-preset="cdDash">虚线硬框</button>
       </div>
       <div class="field">
         <label for="fCardStyle">风格变体</label>

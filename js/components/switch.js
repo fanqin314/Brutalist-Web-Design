@@ -382,6 +382,10 @@ COMPONENTS['switch'] = {
         <button class="chip" type="button" data-preset="swSlab">厚板镂空</button>
         <button class="chip" type="button" data-preset="swDouble">双框硬描</button>
         <button class="chip" type="button" data-preset="swTape">条带封条</button>
+        <button class="chip" type="button" data-preset="swGrid">网格轨道</button>
+        <button class="chip" type="button" data-preset="swNotch">缺口开关</button>
+        <button class="chip" type="button" data-preset="swBevel">斜切开关</button>
+        <button class="chip" type="button" data-preset="swRing">圆环滑块</button>
       </div>
       <div class="field">
         <label for="fSwStyle">风格变体</label>

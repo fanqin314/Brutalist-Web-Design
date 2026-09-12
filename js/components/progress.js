@@ -230,6 +230,11 @@ COMPONENTS['progress'] = {
         <button class="chip" type="button" data-preset="pgSegment">分段格子</button>
         <button class="chip" type="button" data-preset="pgNotch">箭头缺口</button>
         <button class="chip" type="button" data-preset="pgTick">刻度轨道</button>
+        <button class="chip" type="button" data-preset="pgDouble">双线内框</button>
+        <button class="chip" type="button" data-preset="pgGrid">网格轨道</button>
+        <button class="chip" type="button" data-preset="pgPill">圆头胶囊</button>
+        <button class="chip" type="button" data-preset="pgChevron">尖角推进</button>
+        <button class="chip" type="button" data-preset="pgTape">斜贴封条</button>
       </div>
       <div class="field">
         <label for="fPgStyle">轨道变体</label>

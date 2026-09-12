@@ -225,6 +225,13 @@ COMPONENTS['badge'] = {
         <button class="chip" type="button" data-preset="bdBanner">缎带旗标</button>
         <button class="chip" type="button" data-preset="bdZigzag">锯齿封条</button>
         <button class="chip" type="button" data-preset="bdStamp">印章双框</button>
+        <button class="chip" type="button" data-preset="bdFold">折角贴纸</button>
+        <button class="chip" type="button" data-preset="bdOutline">描边空章</button>
+        <button class="chip" type="button" data-preset="bdSide">侧栏标条</button>
+        <button class="chip" type="button" data-preset="bdGrid">网格底纹</button>
+        <button class="chip" type="button" data-preset="bdCorner">切角徽章</button>
+        <button class="chip" type="button" data-preset="bdNotch">缺口徽章</button>
+        <button class="chip" type="button" data-preset="bdDouble">双线徽章</button>
       </div>
       <div class="field">
         <label for="fBdStyle">形状变体</label>

@@ -54,14 +54,20 @@ function randomize() {
 
   render();
   flushHistory();
+  renderFullpage();  /* 全屏开着时，配色/内容就地更新 */
+  toast('已随机组合');  /* 即使配色接近也给出即时反馈，不会让人以为按钮失灵 */
 }
 
   function reset() {
     const mode = state.mode;
+    const showMatrix = !!state.showMatrix;   /* 五态矩阵是用户偏好：重置只该还原组件的样式，别把视图偏好也改回默认 */
     state = Object.assign({}, DEFAULTS);
     state.mode = mode;
+    state.showMatrix = showMatrix;
     render();
     flushHistory();
+    renderFullpage();
+    toast(mode === 'page' ? '已恢复整页默认' : '已重置为该组件默认');
   }
 
   /* =========================================================
@@ -260,28 +266,9 @@ function randomize() {
     const T = { button: BTN_STYLES, card: CARD_STYLES, checkbox: CB_STYLES,
                 switch: SW_STYLES, input: IN_STYLES, badge: BD_STYLES,
                 radio: RD_STYLES, progress: PG_STYLES, slider: SL_STYLES,
-                select: SE_STYLES }[mode];
+                select: SE_STYLES, table: TB_STYLES, nav: NV_STYLES,
+                tabs: TS_STYLES }[mode];
     return T ? Object.keys(T).length : 0;
-  }
-
-  /* 模式栏从注册表一次性整体重建：清空后逐模式生成，保证按钮扁平、
-     无重复、无历史残留的错位标记。modebar 的按钮数量/顺序只由 MODES 决定。 */
-  function layoutModebar() {
-    const bar = document.getElementById('modebar');
-    const html = MODES.map(function (m) {
-      const name = COMPONENTS[m] ? COMPONENTS[m].label : m;
-      const n = modeStyleCount(m);
-      const act = m === state.mode ? ' active' : '';
-      return '<button class="mode-tab' + act + '" type="button" data-mode="' + m + '"' +
-        ' role="tab" aria-controls="preview"' +
-        ' aria-selected="' + (m === state.mode ? 'true' : 'false') + '"' +
-        ' tabindex="' + (m === state.mode ? '0' : '-1') + '"' +
-        (n ? ' title="' + esc(name) + ' · ' + n + ' 款变体"' : '') + '>' +
-        '<span class="mode-tab__label">' + esc(name) + '</span>' +
-        '<span class="mode-tab__n" aria-hidden="true">' + n + '</span>' +
-        '</button>';
-    }).join('');
-    bar.innerHTML = html;
   }
 
   function enhanceModebar() {
@@ -468,6 +455,27 @@ function randomize() {
     else if ((k === 'z' && e.shiftKey) || k === 'y') { e.preventDefault(); redo(); }
   });
 
+  /* 让预设 chip 本身显示自己的配底色（像演示那样直接上色）：
+     默认 = 该 preset 的底色/文字/描边；悬停 = 反白表态；选中 = 荧光黄高亮。
+     用注入的 <style>（比 base.css 后加载）统一接管，颜色数据仍只维护在 PRESETS。 */
+  function addPresetChipColors() {
+    const rules = [];
+    document.querySelectorAll('.presets .chip[data-preset]').forEach(function (b) {
+      const p = PRESETS[b.getAttribute('data-preset')];
+      if (!p || !p.bg) return;
+      const s = b.getAttribute('data-preset');
+      const fg = p.color || '#0a0a0a';
+      const bc = p.borderColor || fg;
+      rules.push('.chip[data-preset="' + s + '"]{background:' + p.bg + ';color:' + fg + ';border-color:' + bc + '}');
+      rules.push('.chip[data-preset="' + s + '"]:hover{background:' + bc + ';color:' + p.bg + ';border-color:' + bc + '}');
+      rules.push('.chip[data-preset="' + s + '"].is-on{background:#ffe44d;color:#141414;border-color:#141414}');
+    });
+    if (!rules.length) return;
+    const st = document.createElement('style');
+    st.textContent = rules.join('\n');
+    document.head.appendChild(st);
+  }
+
   function boot() {
     let loaded = null;
     let fromHash = false;
@@ -483,6 +491,7 @@ function randomize() {
 
     if (loaded) state = loaded;
     enhanceModebar();
+    addPresetChipColors();   /* 等 buildChrome 把各组件的预设 chip 也注进来后再上色 */
     syncTabs();
     syncViewChips();
     render();
@@ -659,7 +668,14 @@ function randomize() {
       'padding:16px 24px 72px;box-sizing:border-box;display:none;}',
     '.pv-full.is-open{display:block;}',
     '.pv-full__bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;' +
-      'justify-content:flex-end;gap:16px;margin-bottom:20px;}',
+      'justify-content:space-between;gap:12px;margin-bottom:20px;}',
+    '.pv-full__tools{display:flex;gap:8px;}',
+    '.pv-full__act{font-family:var(--study-font-sans, ui-monospace, Menlo, Consolas, monospace);' +
+      'font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;' +
+      'color:#fff;background:#141414;border:2px solid #141414;padding:10px 14px;cursor:pointer;' +
+      'box-shadow:3px 3px 0 rgba(20,20,20,.35);}',
+    '.pv-full__act:hover{background:#ffe44d;color:#141414;border-color:#141414;}',
+    '.pv-full__act:active{transform:translate(2px,2px);box-shadow:none;}',
     '.pv-full__title{font-family:var(--study-font-sans, ui-monospace, Menlo, Consolas, monospace);' +
       'font-weight:800;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#222;}',
     '.pv-full__close{width:46px;height:46px;border-radius:999px;border:2px solid #141414;' +
@@ -674,6 +690,27 @@ function randomize() {
     'body.no-scroll-full{overflow:hidden;}'
   ].join('\n');
 
+  function isFullpageOpen() {
+    const ov = document.getElementById('pv-full');
+    return !!(ov && ov.classList.contains('is-open'));
+  }
+
+  /* 重建全屏浮层里的页面（不需要重建外围框架）。
+     随机 / 重置后调用，让全屏里的配色也跟着变。 */
+  function renderFullpage() {
+    const ov = document.getElementById('pv-full');
+    if (!ov || !isFullpageOpen()) return;
+    const wrap = ov.querySelector('.pv-full__wrap');
+    const cssEl = document.createElement('style');
+    cssEl.textContent = FULLPAGE_CSS + '\n' +
+      (view.minify ? minifyCSS(buildCSS(state)) : buildCSS(state));
+    wrap.innerHTML = buildHTML(state);
+    wrap.insertBefore(cssEl, wrap.firstChild);
+    /* 重新让整页里的标签页 / 下拉框等恢复交互 */
+    try { (new Function(TABS_JS))(); } catch (e) { /* 增强交互失败不回退 */ }
+    ov.scrollTop = 0;
+  }
+
   function openFullpage() {
     let ov = document.getElementById('pv-full');
     if (!ov) {
@@ -682,26 +719,30 @@ function randomize() {
       ov.className = 'pv-full';
       ov.innerHTML =
         '<div class="pv-full__bar">' +
+        '<div class="pv-full__tools">' +
+        '<button class="pv-full__act" id="pvFullRandom" type="button" title="随机组合配色与内容">随机</button>' +
+        '<button class="pv-full__act" id="pvFullReset" type="button" title="重置该模式默认">重置</button>' +
+        '</div>' +
         '<span class="pv-full__title">全屏预览</span>' +
         '<button class="pv-full__close" type="button" title="关闭（Esc）" aria-label="关闭预览">' +
         '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4 L20 20 M20 4 L4 20"/></svg>' +
         '</button></div>' +
         '<div class="pv-full__wrap"></div>';
-      ov.querySelector('.pv-full__close').addEventListener('click', closeFullpage);
+      ov.querySelector('.pv-full__close').addEventListener('click', function (e) {
+        e.stopPropagation(); closeFullpage();
+      });
+      ov.querySelector('#pvFullRandom').addEventListener('click', function (e) {
+        e.stopPropagation(); randomize();
+      });
+      ov.querySelector('#pvFullReset').addEventListener('click', function (e) {
+        e.stopPropagation(); reset();
+      });
       ov.addEventListener('click', function (e) { if (e.target === ov) closeFullpage(); });
       document.body.appendChild(ov);
     }
-    const wrap = ov.querySelector('.pv-full__wrap');
-    const cssEl = document.createElement('style');
-    cssEl.textContent = FULLPAGE_CSS + '\n' +
-      (view.minify ? minifyCSS(buildCSS(state)) : buildCSS(state));
-    wrap.innerHTML = buildHTML(state);
-    wrap.insertBefore(cssEl, wrap.firstChild);
+    renderFullpage();
     ov.classList.add('is-open');
     document.body.classList.add('no-scroll-full');
-    /* 让整页里的标签页 / 下拉框等也能交互 */
-    try { (new Function(TABS_JS))(); } catch (e) { /* 预览内互动只是增强，失败不回退 */ }
-    ov.scrollTop = 0;
     ov.querySelector('.pv-full__close').focus();
   }
 
@@ -774,7 +815,8 @@ document.getElementById('panel').addEventListener('click', function (e) {
   const preset = PRESETS[btn.dataset.preset];
   if (!preset) return;
   const mode = state.mode;
-  state = sanitize(Object.assign({}, preset, { mode: mode }));
+  const showMatrix = !!state.showMatrix;   /* 五态矩阵是视图偏好，切预设别把它顺带改回默认 */
+  state = sanitize(Object.assign({}, preset, { mode: mode, showMatrix: showMatrix }));
   render();
   flushHistory();
 });
@@ -819,10 +861,17 @@ document.addEventListener('keydown', function (e) {
 
 /* 用 registry 动态生成模式栏与每模式的控制分组 */
 (function buildChrome() {
-  layoutModebar();   /* 模式栏整体确定性重建，只由 MODES 决定 */
+  const bar = document.getElementById('modebar');
   const host = document.getElementById('modePanels');
   MODES.forEach(function (m) {
     const c = COMPONENTS[m];
+    const b = document.createElement('button');
+    b.className = 'mode-tab' + (m === state.mode ? ' active' : '');
+    b.type = 'button';
+    b.dataset.mode = m;
+    b.textContent = c ? c.label : m;
+    bar.appendChild(b);
+
     if (c && c.panel) {
       const sec = document.createElement('section');
       sec.className = 'group';
