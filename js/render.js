@@ -133,6 +133,39 @@ function buildHTML(s) {
   }
 
 
+  /* 代码区是「只读派生」，无需每帧都重跑语法高亮。
+     raw 原文始终同步写入（复制拿它，永远最新）；
+     高亮用 rAF 合并到一帧内、按元素只算最新一份。
+     复制按钮点下去前会先 flushCodeRefresh() 冲掉挂起的高亮，所见即所得。 */
+  let _codeHLFrame = 0;
+  let _codeHLPending = [];
+
+  function _codeHLFlush() {
+    _codeHLFrame = 0;
+    if (!_codeHLPending.length) return;
+    const byId = {};
+    _codeHLPending.forEach(function (it) { byId[it.el.id] = it; });
+    _codeHLPending = [];
+    Object.keys(byId).forEach(function (id) {
+      const it = byId[id];
+      it.el.innerHTML = (it.lang === 'css' ? hlCSS : hlHTML)(it.text);
+    });
+  }
+
+  function scheduleCodeRefresh(el, text, lang) {
+    el.dataset.raw = text;              /* 原文永远同步，复制安全 */
+    el.textContent = text;
+    if (!view.codeHL) return;          /* 不启用高亮时无需排队 */
+    _codeHLPending.push({ el: el, text: text, lang: lang });
+    if (_codeHLFrame) return;
+    _codeHLFrame = requestAnimationFrame(_codeHLFlush);
+  }
+
+  function flushCodeRefresh() {
+    if (_codeHLFrame) cancelAnimationFrame(_codeHLFrame);
+    _codeHLFlush();
+  }
+
   function render() {
     const one = buildHTML(state);
     const css = buildCSS(state);
@@ -145,9 +178,8 @@ function buildHTML(s) {
     renderPatternTag();
     genStyle.textContent = css;
 
-    /* 代码区可能被压缩 / 高亮，但复制与导出永远拿 dataset.raw 这份原文 */
-    setCode(htmlCode, view.minify ? minifyHTML(one) : one, 'html');
-    setCode(cssCode,  view.minify ? minifyCSS(css)  : css,  'css');
+    scheduleCodeRefresh(htmlCode, view.minify ? minifyHTML(one) : one, 'html');
+    scheduleCodeRefresh(cssCode,  view.minify ? minifyCSS(css)  : css,  'css');
 
     textLabel.textContent = TEXT_LABELS[state.mode] || '文字';
     updateVisibility();
@@ -161,9 +193,5 @@ function buildHTML(s) {
        - 模式切换走 modebar 事件委托
        - 键盘导航（方向键 / 数字键）绑定在 app.js
      render.js 不再逐元素 / 逐监听绑定。
-     ========================================================= */
-
-  /* =========================================================
-     随机 / 重置
      ========================================================= */
 

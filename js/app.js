@@ -65,11 +65,6 @@ function randomize() {
   }
 
   /* =========================================================
-     事件 · 预设
-     ========================================================= */
-
-
-  /* =========================================================
      复制
      ========================================================= */
 
@@ -107,8 +102,9 @@ function randomize() {
     btn.addEventListener('click', function () {
       const target = document.getElementById(btn.dataset.target);
       if (!target) return;
-      /* 高亮会在 <code> 里插一堆 <span>，textContent 虽然还是原文，
-         但走 dataset.raw 更稳：高亮规则改了也影响不到复制结果 */
+      /* 复制前先冲掉挂起的高亮，保证所见即所得；
+         内容本身走 dataset.raw（高亮会插 <span>，raw 才是原文） */
+      if (typeof flushCodeRefresh === 'function') flushCodeRefresh();
       const raw = target.dataset.raw;
       copyText(raw != null ? raw : target.textContent, btn);
     });
@@ -593,11 +589,7 @@ function randomize() {
     return out;
   }
 
-  function setCode(el, text, lang) {
-    el.dataset.raw = text;
-    if (view.codeHL) el.innerHTML = (lang === 'css' ? hlCSS : hlHTML)(text);
-    else el.textContent = text;
-  }
+  /* 代码区的 raw / 高亮写入已收敛到 render.js 的 scheduleCodeRefresh/刷新逻辑 */
 
   /* ---------------- 压缩 ----------------
      刻意只做「安全压缩」：去注释、去换行缩进、收掉分隔符周围空白。
